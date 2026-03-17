@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>General Agent Hub</title>
+  <title>My Medi GA Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -3753,9 +3753,9 @@
     <header class="topbar">
       <div class="topbar-inner">
         <div class="brand">
-          <div class="logo-pill" style="background:var(--accent);padding:6px 14px;border-radius:8px;font-weight:800;font-size:18px;letter-spacing:0.5px;color:#fff;">GA Hub</div>
+          <div class="logo-pill" style="background:var(--accent);padding:6px 14px;border-radius:8px;font-weight:800;font-size:18px;letter-spacing:0.5px;color:#fff;">My Medi GA</div>
           <div>
-            <div class="brand-name">GA Hub</div>
+            <div class="brand-name">My Medi GA Hub</div>
             <div class="brand-sub">Tools, libraries &amp; ops support</div>
           </div>
         </div>
@@ -4403,7 +4403,7 @@ When answering:
     <footer>
       <div class="footer-inner">
         <div>
-          <div class="footer-brand">General Agent Hub</div>
+          <div class="footer-brand">My Medi GA Hub</div>
           <div class="footer-note">Internal resource center for agent tools, libraries, and planning calculators.</div>
         </div>
         <div style="font-size:11px;color:var(--muted-2);">© 2025 General Agents Hub</div>
@@ -6788,7 +6788,7 @@ ${target.outerHTML}
   // ── Load from JSONBin ──────────────────────────────────────────────────────
   function initVideos() {
     fetch(JB_URL + '/latest', {
-      headers: { 'X-Access-Key': JB_API_KEY }
+      headers: { 'X-Access-Key': JB_API_KEY, 'Cache-Control': 'no-cache' }
     })
     .then(r => r.json())
     .then(data => {
