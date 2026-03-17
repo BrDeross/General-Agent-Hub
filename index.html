@@ -4530,10 +4530,6 @@ When answering:
     if (record.snu_aom      && Object.keys(record.snu_aom).length)      localStorage.setItem('snu_aom_v1',       JSON.stringify(record.snu_aom));
     if (Array.isArray(record.snu_updates) && record.snu_updates.length) localStorage.setItem('snu_updates_v1',  JSON.stringify(record.snu_updates));
     if (record.snu_trip?.agents?.length) localStorage.setItem('snu_trip_v1', JSON.stringify(record.snu_trip));
-    if (Array.isArray(record.snu_videos) && record.snu_videos.length) {
-      localStorage.setItem('snu_videos_v1', JSON.stringify(record.snu_videos));
-      if (typeof renderVideoLibrary === 'function') renderVideoLibrary();
-    }
 
     if (typeof renderSnuFromStorage === 'function') renderSnuFromStorage();
     if (typeof renderAllAomCards    === 'function') renderAllAomCards();
