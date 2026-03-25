@@ -1640,7 +1640,7 @@
 
 
     /* ══════════════════════════════════════════════
-       GA HUB — WEEKLY LEADERBOARD NEWSLETTER
+       SNU — SHOW N UP NEWSLETTER
     ══════════════════════════════════════════════ */
 
     .snu-grid {
@@ -3884,7 +3884,7 @@
           </div>
         </div>
         <div class="topbar-live-right">
-          <button class="admin-trigger" onclick="openAdmin()">⚙️ GA Admin</button>
+          <button class="admin-trigger" onclick="openAdmin()">⚙️ SNU Admin</button>
           <div class="infobar-divider"></div>
           <div class="live-clock" id="liveClock">--:-- --</div>
         </div>
@@ -4330,18 +4330,18 @@
       </div>
     </section>
 
-        <!-- GA HUB — WEEKLY LEADERBOARD NEWSLETTER -->
+        <!-- SNU — SHOW N UP NEWSLETTER -->
     <section class="section" id="leaderboard">
       <div class="wrap">
         <div class="section-head">
           <div class="sh-left">
             <div class="sh-icon gold">🏆</div>
             <div>
-              <h2>Leaderboard<span style="color:var(--muted-2);font-weight:400;font-size:.55em;margin-left:12px;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.5px;">Weekly Performance</span></h2>
+              <h2>SNU<span style="color:var(--muted-2);font-weight:400;font-size:.55em;margin-left:12px;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.5px;">Show N Up</span></h2>
               <p>Weekly production leaders &amp; industry news</p>
             </div>
           </div>
-          <button class="snu-view-btn" onclick="openSnuPrint()">🗞️ View / Print Weekly Report</button>
+          <button class="snu-view-btn" onclick="openSnuPrint()">🗞️ View / Print Full SNU</button>
         </div>
 
         <div class="snu-grid">
@@ -4460,12 +4460,12 @@
       <!-- Login Gate -->
       <div id="adminLoginGate">
         <div class="admin-modal-header">
-          <div class="admin-modal-title">🔒 GA Admin Login</div>
+          <div class="admin-modal-title">🔒 SNU Admin Login</div>
           <button class="admin-close" onclick="closeAdmin()">✕</button>
         </div>
         <div class="admin-login">
           <h3>Admin Access Required</h3>
-          <p>Enter your password to update the weekly GA Hub data.</p>
+          <p>Enter your password to update the weekly SNU data.</p>
           <div class="admin-login-row">
             <input class="admin-input" type="password" id="adminPwInput" placeholder="Password…" onkeydown="if(event.key==='Enter')checkAdminPw()">
             <button class="admin-save-btn" style="width:auto;padding:9px 20px;" onclick="checkAdminPw()">Login</button>
@@ -4477,13 +4477,13 @@
       <!-- Admin Form (shown after login) -->
       <div id="adminForm" style="display:none;">
         <div class="admin-modal-header">
-          <div class="admin-modal-title">📋 GA Admin Panel</div>
+          <div class="admin-modal-title">📋 SNU Admin Panel</div>
           <button class="admin-close" onclick="closeAdmin()">✕</button>
         </div>
 
         <!-- Tabs -->
         <div class="admin-tabs">
-          <button class="admin-tab active" onclick="switchAdminTab('snu',this)">🏆 GA Data</button>
+          <button class="admin-tab active" onclick="switchAdminTab('snu',this)">🏆 SNU Data</button>
           <button class="admin-tab" onclick="switchAdminTab('spotlight',this)">⭐ Agent Spotlight</button>
           <button class="admin-tab" onclick="switchAdminTab('aom',this)">🗓️ Agent of Month</button>
           <button class="admin-tab" onclick="switchAdminTab('updates',this)">📡 Updates Feed</button>
@@ -4497,7 +4497,7 @@
           <button class="admin-tab" onclick="switchAdminTab('layout',this)">🔀 Layout</button>
         </div>
 
-        <!-- ── Tab: GA Data ── -->
+        <!-- ── Tab: SNU Data ── -->
         <div id="adminTabSnu" class="admin-tab-panel active">
         <div class="admin-body">
         <!-- ☁️ Sync All Banner -->
@@ -5191,7 +5191,7 @@
           <div class="spotlight-card">
             <div class="spotlight-empty">
               <div class="spotlight-empty-icon">🌟</div>
-              <div class="spotlight-empty-text">No spotlight set yet — use ⚙️ GA Admin to feature an agent.</div>
+              <div class="spotlight-empty-text">No spotlight set yet — use ⚙️ SNU Admin to feature an agent.</div>
             </div>
           </div>
         </div>
@@ -5478,14 +5478,14 @@ When answering:
 
   <script id="jsonbin-sync">
   // ═══════════════════════════════════════════════════════════════
-  //  GA HUB — JSONBin Cloud Sync Layer v2
+  //  MY MEDI — JSONBin Cloud Sync Layer v2
   //  Main bin  : text data (no photos)
   //  Photo bin : compressed photos (auto-created on first sync)
   // ═══════════════════════════════════════════════════════════════
   const JB_MASTER_KEY    = '$2a$10$dCpyXKmwk3yUN0kAuZJ7Huw0/Ht4CwwOBh2ydi1ATORn8Vo96oXVC';
   const JB_BASE          = 'https://api.jsonbin.io/v3';
   const JB_MAIN_BIN      = '69b2cd77aa77b81da9dbc6e6';
-  const JB_PHOTO_BIN_KEY          = 'ga_jb_photo_bin_id';
+  const JB_PHOTO_BIN_KEY          = 'mymedi_jb_photo_bin_id';
   const JB_PHOTO_BIN_HARDCODED = '69b2da94c3097a1dd51cd2cf';
   const JB_EMPTY         = { snu_data:{}, snu_article:{}, snu_spotlight:{}, snu_aom:{}, snu_updates:[], snu_trip:{agents:[],meta:{}} };
 
@@ -5580,10 +5580,10 @@ When answering:
     }
     window._jbRecord = record;
 
-    if (record.snu_data     && Object.keys(record.snu_data).length)    localStorage.setItem('ga_snu_data_v1',      JSON.stringify(record.snu_data));
+    if (record.snu_data     && Object.keys(record.snu_data).length)    localStorage.setItem('snu_data_v1',      JSON.stringify(record.snu_data));
     if (record.snu_article  && Object.keys(record.snu_article).length)  localStorage.setItem('snu_article_v1',   JSON.stringify(record.snu_article));
-    if (record.snu_spotlight?.name)                                      localStorage.setItem('ga_snu_spotlight_v1', JSON.stringify(record.snu_spotlight));
-    if (record.snu_aom      && Object.keys(record.snu_aom).length)      localStorage.setItem('ga_snu_aom_v1',       JSON.stringify(record.snu_aom));
+    if (record.snu_spotlight?.name)                                      localStorage.setItem('snu_spotlight_v1', JSON.stringify(record.snu_spotlight));
+    if (record.snu_aom      && Object.keys(record.snu_aom).length)      localStorage.setItem('snu_aom_v1',       JSON.stringify(record.snu_aom));
     // snu_trip now handled by Supabase trip_tracker table
 
     if (typeof renderSnuFromStorage === 'function') renderSnuFromStorage();
@@ -5595,16 +5595,16 @@ When answering:
 
   // ── Save a field ──────────────────────────────────────────────
   window.jbSave = async function(field, value) {
-    const lsMap = { snu_data:'ga_snu_data_v1', snu_article:'snu_article_v1', snu_spotlight:'ga_snu_spotlight_v1', snu_aom:'ga_snu_aom_v1', snu_updates:'ga_snu_updates_v1', snu_trip:'ga_snu_trip_v1' };
+    const lsMap = { snu_data:'snu_data_v1', snu_article:'snu_article_v1', snu_spotlight:'snu_spotlight_v1', snu_aom:'snu_aom_v1', snu_updates:'snu_updates_v1', snu_trip:'snu_trip_v1' };
     if (lsMap[field]) { try { localStorage.setItem(lsMap[field], JSON.stringify(value)); } catch(e) {} }
 
     // Save photos to photo bin
     if (field === 'snu_spotlight') {
-      const aom = (() => { try { return JSON.parse(localStorage.getItem('ga_snu_aom_v1')||'{}'); } catch(e){return{};} })();
+      const aom = (() => { try { return JSON.parse(localStorage.getItem('snu_aom_v1')||'{}'); } catch(e){return{};} })();
       jbSavePhotos(value?.photo||null, aom);
     }
     if (field === 'snu_aom') {
-      const sp = (() => { try { return JSON.parse(localStorage.getItem('ga_snu_spotlight_v1')||'{}'); } catch(e){return{};} })();
+      const sp = (() => { try { return JSON.parse(localStorage.getItem('snu_spotlight_v1')||'{}'); } catch(e){return{};} })();
       jbSavePhotos(sp?.photo||null, value);
     }
 
@@ -5628,7 +5628,7 @@ When answering:
     const btn = document.querySelector('[onclick="syncAllToCloud()"]');
     if (btn) { btn.textContent = '⏳ Syncing…'; btn.disabled = true; }
     const g = k => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch(e){ return null; } };
-    const record = { snu_data: g('ga_snu_data_v1')||{}, snu_article: g('snu_article_v1')||{}, snu_spotlight: g('ga_snu_spotlight_v1')||{}, snu_aom: g('ga_snu_aom_v1')||{}, snu_updates: g('ga_snu_updates_v1')||[] };
+    const record = { snu_data: g('snu_data_v1')||{}, snu_article: g('snu_article_v1')||{}, snu_spotlight: g('snu_spotlight_v1')||{}, snu_aom: g('snu_aom_v1')||{}, snu_updates: g('snu_updates_v1')||[] };
     const [ok] = await Promise.all([
       jbWriteBin(JB_MAIN_BIN, jbStripPhotos(record)),
       jbSavePhotos(record.snu_spotlight?.photo||null, record.snu_aom)
@@ -5643,7 +5643,7 @@ When answering:
     const DATA_URL = 'https://script.google.com/macros/s/AKfycbz6ZQm5QdcvIaqPiCRt-fTvpn65m9SzCHZrEeK16m61wIJeIO6G0Q5HfpqhIQK2RbpEkg/exec';
 
     async function loadData() {
-      // Feed is now managed via GA Admin — no external fetch needed
+      // Feed is now managed via SNU Admin — no external fetch needed
       // (Legacy Google Script fetch kept as fallback but localStorage takes priority)
       if (typeof initUpdates === 'function') return; // handled by updates-script
     }
@@ -6391,8 +6391,8 @@ When answering:
 
   <script id="snu-script">
   // ── SNU CONFIG ─────────────────────────────────────────────────────────────
-  const SNU_PW       = 'GAhub2025';   // GA Hub admin password
-  const STORAGE_KEY  = 'ga_snu_data_v1';
+  const SNU_PW       = 'GAhub2025';
+  const STORAGE_KEY  = 'snu_data_v1';
   const ARTICLE_KEY  = 'snu_article_v1';
 
   // ── Global in-memory state — single source of truth for both dashboard + print ──
@@ -6429,7 +6429,7 @@ When answering:
         renderSnuLeaderboard(window._snuState.data);
         renderSnuExecs(window._snuState.data);
       }
-    } catch(e) { console.warn('GA data parse error', e); }
+    } catch(e) { console.warn('SNU data parse error', e); }
     // Article display handled by Article Locker (article-locker-script)
   }
 
@@ -6631,7 +6631,7 @@ When answering:
     agents.sort((a, b) => (b.production || 0) - (a.production || 0));
 
     const top7 = agents.slice(0, 7).map(a => a.name);
-    const HISTORY_KEY = 'ga_snu_exec_history_v1';
+    const HISTORY_KEY = 'snu_exec_history_v1';
     let history = [];
     try { history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch(e) { history = []; }
     const entry = { weekLabel, dateRange, top7, savedAt: new Date().toISOString() };
@@ -6659,7 +6659,7 @@ When answering:
     renderSnuExecs(data);
     advanceArticleQueue();   // auto-advance spotlight on each SNU save
     closeAdmin();
-    showSnuToast('✓ GA data published!');
+    showSnuToast('✓ SNU data published!');
   }
 
   function showSnuToast(msg) {
@@ -6884,7 +6884,7 @@ When answering:
     if (spread) {
       let sp = null;
       // Try in-memory record first (has photo), fall back to localStorage
-      try { sp = window._jbRecord?.snu_spotlight || JSON.parse(localStorage.getItem('ga_snu_spotlight_v1') || 'null'); } catch(e) {}
+      try { sp = window._jbRecord?.snu_spotlight || JSON.parse(localStorage.getItem('snu_spotlight_v1') || 'null'); } catch(e) {}
       if (sp && sp.name) {
         const p = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         // Photo: tall enough to show full portrait, cover+top so face always visible
@@ -6908,7 +6908,7 @@ When answering:
             </div>
           </div>`;
       } else {
-        spread.innerHTML = '<div style="color:var(--muted-2);font-style:italic;font-size:13px;text-align:center;padding:24px 0;">No spotlight set — feature an agent via GA Admin.</div>';
+        spread.innerHTML = '<div style="color:var(--muted-2);font-style:italic;font-size:13px;text-align:center;padding:24px 0;">No spotlight set — feature an agent via SNU Admin.</div>';
       }
     }
   }
@@ -7060,7 +7060,7 @@ When answering:
       ``,
       `Best regards,`,
       `[Your Name]`,
-      `GA Hub`,
+      `Medi Solutions`,
     ].filter(l => l !== null).join('\n');
 
     const prev = document.getElementById('lifeEmailPreview');
@@ -7156,7 +7156,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
 
   <script id="spotlight-script">
-  const SPOTLIGHT_KEY = 'ga_snu_spotlight_v1';
+  const SPOTLIGHT_KEY = 'snu_spotlight_v1';
 
   // ── Tab switcher ──────────────────────────────────────────────────────────
   function switchAtTab(panelId, btn) {
@@ -7367,7 +7367,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
 
   <script id="aom-script">
-  const AOM_KEY = 'ga_snu_aom_v1';
+  const AOM_KEY = 'snu_aom_v1';
   const AOM_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   let _aomData = {};          // { 0: {name,stat,note,photo}, 1: {...}, ... }
   let _aomEditingMonth = null;
@@ -7567,8 +7567,8 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   const SUPA_URL    = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
   const SUPA_KEY    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
   const SUPA_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
-  const UPD_HUB     = 'ga';
-  const UPD_STORAGE_KEY = 'ga_snu_updates_v1';
+  const UPD_HUB     = 'medi';
+  const UPD_STORAGE_KEY = 'snu_updates_v1';
   let _updates = [];
   let _updSaving = false;
   let _updAttachBase64 = null;
@@ -7682,7 +7682,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     if (!el) return;
     if (badge) badge.textContent = items.length + (items.length === 1 ? ' update' : ' updates');
     if (!items.length) {
-      el.innerHTML = '<div class="empty">No updates right now \u2014 add some via GA Admin.</div>';
+      el.innerHTML = '<div class="empty">No updates right now \u2014 add some via SNU Admin.</div>';
       return;
     }
     const pesc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -7809,8 +7809,8 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   const JB_SUPA_URL = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
   const JB_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
   const JB_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
-  const VID_HUB     = 'ga';
-  const VID_STORAGE_KEY = 'ga_videos_v1';
+  const VID_HUB     = 'medi';
+  const VID_STORAGE_KEY = 'videos_v1';
   let _videos = [];
   let _videosSaving = false;
 
@@ -8073,7 +8073,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
       <!-- Action bar -->
       <div class="snu-print-actions">
-        <span class="snu-print-action-title">🗞 GA Hub · Weekly Edition</span>
+        <span class="snu-print-action-title">🗞 SNU · Show N Up</span>
         <div class="snu-print-btn-row">
           <button class="snu-print-btn ghost" onclick="closeSnuPrint()">✕ Close</button>
           <button class="snu-print-btn primary" onclick="triggerSnuPrint()">🖨️ Print / Save PDF</button>
@@ -8096,7 +8096,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
         <div class="mag-cover-content">
           <div class="mag-issue-label" id="magIssueLabel">CURRENT ISSUE</div>
           <div class="mag-snu-title">S<span>N</span>U</div>
-          <div class="mag-tagline">GA Hub — Weekly Agent Performance &amp; Industry News</div>
+          <div class="mag-tagline">Show N Up — Weekly Agent Performance &amp; Industry News</div>
           <div class="mag-meta-chips">
             <span class="mag-meta-chip">📅 <span id="magDateLabel">—</span></span>
             <span class="mag-meta-chip">🏆 <span id="magAgentCount">—</span> Top Producers</span>
@@ -8118,7 +8118,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
           <!-- Leaderboard -->
           <div class="mag-col">
             <div id="magLbList">
-              <div style="color:var(--muted-2);font-style:italic;font-size:12px;padding:16px 0;">No leaderboard data — save from GA Admin.</div>
+              <div style="color:var(--muted-2);font-style:italic;font-size:12px;padding:16px 0;">No leaderboard data — save from SNU Admin.</div>
             </div>
           </div>
 
@@ -8137,7 +8137,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
       </div>
       <div style="padding:0 36px 28px;" id="magSpotlightSpread">
         <div style="color:var(--muted-2);font-style:italic;font-size:13px;text-align:center;padding:24px 0;">
-          No spotlight set — feature an agent via GA Admin.
+          No spotlight set — feature an agent via SNU Admin.
         </div>
       </div>
 
@@ -8187,7 +8187,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   </div>
 
   <script id="trip-tracker-script">
-  const TRIP_KEY       = 'ga_snu_trip_v1';
+  const TRIP_KEY       = 'snu_trip_v1';
   const TRIP_START     = new Date('2026-01-01');
   const TRIP_END       = new Date('2027-06-30');
   const DEFAULT_GOAL   = 50000;  // pts — change to match your actual qualifying bar
@@ -8198,7 +8198,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   // ── Load & Render ──────────────────────────────────────────────────────────
   function loadTripData() {
     // Load from Supabase only
-    fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker?hub=eq.ga&select=data', {
+    fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker?hub=eq.medi&select=data', {
       headers: { 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q', 'Cache-Control': 'no-cache' }
     }).then(r => r.json()).then(rows => {
       if (rows && rows.length && rows[0].data) {
@@ -8345,11 +8345,11 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     renderTripTracker();
     const _tripPayload = JSON.stringify(data);
     const _tripHdrs = { 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q', 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
-    fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker?hub=eq.ga', {
+    fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker?hub=eq.medi', {
       method: 'DELETE', headers: { 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q' }
     }).then(() => fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker', {
       method: 'POST', headers: _tripHdrs,
-      body: JSON.stringify({ hub: 'ga', data: _tripPayload })
+      body: JSON.stringify({ hub: 'medi', data: _tripPayload })
     })).then(() => showSnuToast('✓ Trip data saved!'))
     .catch(() => showSnuToast('⚠ Save failed — check connection.'));
     // Reset CSV input
@@ -8366,7 +8366,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     _tripAgents = [];
     _tripMeta = {};
     renderTripTracker();
-    fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker?hub=eq.ga', {
+    fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker?hub=eq.medi', {
       method: 'DELETE', headers: { 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q' }
     }).then(() => showSnuToast('↺ Trip data cleared.'))
     .catch(() => showSnuToast('⚠ Clear failed.'));
@@ -8560,7 +8560,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
       '\n  Final expenses + emergency:  ' + final2 +
       '\n  Less savings / coverage:     ' + offsets +
       '\n\nThis is a planning estimate — not underwriting or product advice.' +
-      '\nGenerated by GA Hub.'
+      '\nGenerated by Medi Solutions Agent Hub.'
     );
     window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
   }
@@ -8630,7 +8630,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   const FM_SUPA_URL = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
   const FM_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
   const FM_SVC_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
-  const FRIDAY_STORAGE_KEY = 'ga_friday_meetings_v1';
+  const FRIDAY_STORAGE_KEY = 'friday_meetings_v1';
   let _fridayMeetings = [];
 
   function initFridayMeetings() {
@@ -8642,7 +8642,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     _fridayMeetings = localMeetings;
     renderFridayMeetings(); renderFridayAdminList();
 
-    fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings?hub=eq.ga&select=data`, {
+    fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings?hub=eq.medi&select=data`, {
       headers: { 'apikey': FM_SVC_KEY, 'Authorization': 'Bearer ' + FM_SVC_KEY, 'Cache-Control': 'no-cache' }
     })
     .then(r => r.json())
@@ -8670,7 +8670,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     const payload = JSON.stringify(_fridayMeetings);
     // Safe upsert: try PATCH first, fall back to POST if no row exists
     const headers = { 'apikey': FM_SVC_KEY, 'Authorization': 'Bearer ' + FM_SVC_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
-    fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings?hub=eq.ga`, {
+    fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings?hub=eq.medi`, {
       method: 'PATCH',
       headers,
       body: JSON.stringify({ data: payload })
@@ -8684,7 +8684,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
       if (t === '[]' || t === '') {
         return fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings`, {
           method: 'POST', headers,
-          body: JSON.stringify({ hub: 'ga', data: payload })
+          body: JSON.stringify({ hub: 'medi', data: payload })
         });
       }
       return r;
@@ -8692,11 +8692,11 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     .then(() => { if (onSuccess) onSuccess(); })
     .catch(() => {
       // Last resort: DELETE then INSERT
-      fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings?hub=eq.ga`, {
+      fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings?hub=eq.medi`, {
         method: 'DELETE', headers: { 'apikey': FM_SVC_KEY, 'Authorization': 'Bearer ' + FM_SVC_KEY }
       }).then(() => fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings`, {
         method: 'POST', headers,
-        body: JSON.stringify({ hub: 'ga', data: payload })
+        body: JSON.stringify({ hub: 'medi', data: payload })
       })).then(() => { if (onSuccess) onSuccess(); })
       .catch(e => { console.error('[FM SAVE]', e); showSnuToast('\u26a0 Save failed — check connection.'); });
     });
@@ -8845,7 +8845,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
   // ── Load layout from Supabase and apply ────────────────────────────────────
   function loadLayoutFromCloud() {
-    fetch(`${LAYOUT_SUPA}/rest/v1/tile_content?hub=eq.ga&key=eq.layout&select=data`, {
+    fetch(`${LAYOUT_SUPA}/rest/v1/tile_content?hub=eq.medi&key=eq.layout&select=data`, {
       headers: { 'apikey': LAYOUT_SKEY, 'Authorization': 'Bearer ' + LAYOUT_SKEY, 'Cache-Control': 'no-cache' }
     }).then(r => r.json()).then(rows => {
       if (rows && rows.length && rows[0].data) {
@@ -8863,10 +8863,10 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   function saveLayoutToCloud(order, vis) {
     const payload = JSON.stringify({ order, vis });
     const headers = { 'apikey': LAYOUT_SKEY, 'Authorization': 'Bearer ' + LAYOUT_SKEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
-    fetch(`${LAYOUT_SUPA}/rest/v1/tile_content?hub=eq.ga&key=eq.layout`, {
+    fetch(`${LAYOUT_SUPA}/rest/v1/tile_content?hub=eq.medi&key=eq.layout`, {
       method: 'DELETE', headers: { 'apikey': LAYOUT_SKEY, 'Authorization': 'Bearer ' + LAYOUT_SKEY }
     }).then(() => fetch(`${LAYOUT_SUPA}/rest/v1/tile_content`, {
-      method: 'POST', headers, body: JSON.stringify({ hub: 'ga', key: 'layout', data: payload })
+      method: 'POST', headers, body: JSON.stringify({ hub: 'medi', key: 'layout', data: payload })
     })).then(() => showSnuToast('✓ Layout saved!')).catch(() => {});
   }
 
@@ -9025,7 +9025,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
   <script id="cert-tracker-script">
   // ── CARRIER CERT TRACKER ───────────────────────────────────────────────────
-  const CERT_KEY = 'ga_cert_tracker_v1';
+  const CERT_KEY = 'cert_tracker_v1';
   const CERT_CARRIERS = ['RTS','AHIP','AARP/UHC','AETNA MA','AMERIHEALTH/IBC','ANTHEM','Ambetter','CIGNA MA','CLOVER','GetCovered','HBC','HUMANA','Oscar','WELLCARE','Devoted'];
 
   let _certAgents = []; // [{name, year, certs:{RTS:'Y', AHIP:'', ...}}]
@@ -9207,7 +9207,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
   const CERT_SUPA_URL = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
   const CERT_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
-  const CERT_HUB = 'ga';
+  const CERT_HUB = 'medi';
 
   function loadCertDataFromSupabase() {
     fetch(`${CERT_SUPA_URL}/rest/v1/cert_tracker?hub=eq.${CERT_HUB}&select=data`, {
@@ -9334,7 +9334,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
   // ── MEDICARE UPDATES (Libraries section) ─────────────────────────────────
   const MED_UPD_KEY  = 'med_updates_v1';
-  const MED_UPD_HUB  = 'ga';
+  const MED_UPD_HUB  = 'medi';
   let _medUpdates    = [];
   let _medUpdDragSrc = null;
   let _medUpdFile64  = null;
@@ -9511,7 +9511,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
   // ── NOTE FROM THE PRESIDENT ───────────────────────────────────────────────
   const PRES_KEY  = 'president_note_v1';
-  const PRES_HUB  = 'ga';
+  const PRES_HUB  = 'medi';
 
   function loadPresidentNote() {
     fetch(`${SUPA_BASE}/rest/v1/president_note?hub=eq.${PRES_HUB}&select=data`, {
@@ -9597,13 +9597,13 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   <script id="article-locker-script">
   // ══════════════════════════════════════════════════════════════
   //  ARTICLE LOCKER
-  //  Storage: Supabase table `article_locker` (hub = 'ga')
+  //  Storage: Supabase table `article_locker` (hub = 'medi')
   //  localStorage key: article_locker_v1
   //  Active index key: article_locker_idx_v1
   // ══════════════════════════════════════════════════════════════
   const ART_KEY      = 'article_locker_v1';
   const ART_IDX_KEY  = 'article_locker_idx_v1';
-  const ART_HUB      = 'ga';
+  const ART_HUB      = 'medi';
   const ART_SUPA     = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
   const ART_SKEY     = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
 
@@ -9859,7 +9859,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   // ── Load both tiles from Supabase on page load ───────────────
   function loadTileContent() {
     ['alliance','census'].forEach(key => {
-      fetch(`${TILE_SUPA}/rest/v1/tile_content?hub=eq.ga&key=eq.${key}&select=data`, {
+      fetch(`${TILE_SUPA}/rest/v1/tile_content?hub=eq.medi&key=eq.${key}&select=data`, {
         headers: { 'apikey': TILE_KEY2, 'Authorization': 'Bearer ' + TILE_KEY2, 'Cache-Control': 'no-cache' }
       }).then(r => r.json()).then(rows => {
         if (rows && rows.length && rows[0].data) {
@@ -9892,10 +9892,10 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     const payload = JSON.stringify(data);
     const headers = { 'apikey': TILE_KEY2, 'Authorization': 'Bearer ' + TILE_KEY2, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
     // PATCH first, POST if no row
-    fetch(`${TILE_SUPA}/rest/v1/tile_content?hub=eq.ga&key=eq.${key}`, {
+    fetch(`${TILE_SUPA}/rest/v1/tile_content?hub=eq.medi&key=eq.${key}`, {
       method: 'DELETE', headers: { 'apikey': TILE_KEY2, 'Authorization': 'Bearer ' + TILE_KEY2 }
     }).then(() => fetch(`${TILE_SUPA}/rest/v1/tile_content`, {
-      method: 'POST', headers, body: JSON.stringify({ hub: 'ga', key, data: payload })
+      method: 'POST', headers, body: JSON.stringify({ hub: 'medi', key, data: payload })
     })).then(() => showSnuToast('✓ ' + (key === 'alliance' ? 'Alliance Program' : 'Census Form') + ' saved!'))
     .catch(() => showSnuToast('⚠ Save failed.'));
   }
