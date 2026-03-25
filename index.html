@@ -4027,7 +4027,7 @@
             <span class="card-tag">Compliance</span>
           </a>
 
-          <div class="card" data-color="gold" onclick="openAllianceProgramModal()" style="cursor:pointer;">
+          <div class="card" id="allianceTileCard" data-color="gold" onclick="openAllianceProgramModal()" style="cursor:pointer;">
             <span class="card-arrow">↗</span>
             <div class="card-shimmer"></div>
             <div class="card-icon-wrap">🤝</div>
@@ -4036,7 +4036,7 @@
             <span class="card-tag">Program</span>
           </div>
 
-          <div class="card" data-color="teal" onclick="openCensusFormModal()" style="cursor:pointer;">
+          <div class="card" id="censusTileCard" data-color="teal" onclick="openCensusFormModal()" style="cursor:pointer;">
             <span class="card-arrow">↗</span>
             <div class="card-shimmer"></div>
             <div class="card-icon-wrap">📋</div>
@@ -5067,6 +5067,10 @@
         <div id="adminTabAlliance" class="admin-tab-panel">
           <div class="admin-section-title">🤝 Alliance Program</div>
           <p style="font-size:12px;color:var(--muted-2);margin-bottom:16px;">Set the content and link that appears in the Alliance Program tile. Agents will see this when they click the tile.</p>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:10px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;">
+            <label style="font-size:12px;font-weight:700;color:var(--muted);flex:1;">Show tile on dashboard</label>
+            <button id="allianceVisibleToggle" onclick="toggleTileVisible('alliance')" style="min-width:52px;height:26px;border-radius:13px;border:none;cursor:pointer;font-size:11px;font-weight:800;font-family:inherit;transition:background .2s,color .2s;"></button>
+          </div>
           <div style="margin-bottom:12px;">
             <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">Title</label>
             <input class="admin-input" id="allianceTitle" placeholder="Alliance Program">
@@ -5089,6 +5093,10 @@
         <div id="adminTabCensus" class="admin-tab-panel">
           <div class="admin-section-title">📋 Group Health Census Form</div>
           <p style="font-size:12px;color:var(--muted-2);margin-bottom:16px;">Set the content and link for the Group Health Census tile. You can link to an external form or paste instructions.</p>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:10px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;">
+            <label style="font-size:12px;font-weight:700;color:var(--muted);flex:1;">Show tile on dashboard</label>
+            <button id="censusVisibleToggle" onclick="toggleTileVisible('census')" style="min-width:52px;height:26px;border-radius:13px;border:none;cursor:pointer;font-size:11px;font-weight:800;font-family:inherit;transition:background .2s,color .2s;"></button>
+          </div>
           <div style="margin-bottom:12px;">
             <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">Title</label>
             <input class="admin-input" id="censusTitle" placeholder="Group Health Census Form">
@@ -9856,6 +9864,12 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
   const _tileData = { alliance: {}, census: {} };
 
+  // ── Initialise toggle buttons to ON while cloud data loads ──
+  document.addEventListener('DOMContentLoaded', () => {
+    _refreshToggleBtn('alliance', true);
+    _refreshToggleBtn('census', true);
+  });
+
   // ── Load both tiles from Supabase on page load ───────────────
   function loadTileContent() {
     ['alliance','census'].forEach(key => {
@@ -9876,16 +9890,61 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     if (!d) return;
     const descEl = document.getElementById(key + 'CardDesc');
     if (descEl && d.desc) descEl.textContent = d.desc;
+    // Apply visibility
+    const card = document.getElementById(key + 'TileCard');
+    if (card) card.style.display = (d.visible === false) ? 'none' : '';
+    // Sync toggle button state in admin
+    _refreshToggleBtn(key, d.visible !== false);
+  }
+
+  function _refreshToggleBtn(key, isVisible) {
+    const btn = document.getElementById(key + 'VisibleToggle');
+    if (!btn) return;
+    if (isVisible) {
+      btn.textContent = 'ON';
+      btn.style.background = 'var(--green)';
+      btn.style.color = '#fff';
+    } else {
+      btn.textContent = 'OFF';
+      btn.style.background = 'rgba(255,255,255,.12)';
+      btn.style.color = 'var(--muted-2)';
+    }
+  }
+
+  function toggleTileVisible(key) {
+    const current = _tileData[key]?.visible !== false;
+    const newVal = !current;
+    if (!_tileData[key]) _tileData[key] = {};
+    _tileData[key].visible = newVal;
+    // Apply immediately on dashboard
+    const card = document.getElementById(key + 'TileCard');
+    if (card) card.style.display = newVal ? '' : 'none';
+    _refreshToggleBtn(key, newVal);
+    // Persist to Supabase by re-saving
+    _saveTileVisible(key);
+  }
+
+  function _saveTileVisible(key) {
+    const d = _tileData[key] || {};
+    const payload = JSON.stringify(d);
+    const headers = { 'apikey': TILE_KEY2, 'Authorization': 'Bearer ' + TILE_KEY2, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
+    fetch(`${TILE_SUPA}/rest/v1/tile_content?hub=eq.medi&key=eq.${key}`, {
+      method: 'DELETE', headers: { 'apikey': TILE_KEY2, 'Authorization': 'Bearer ' + TILE_KEY2 }
+    }).then(() => fetch(`${TILE_SUPA}/rest/v1/tile_content`, {
+      method: 'POST', headers, body: JSON.stringify({ hub: 'medi', key, data: payload })
+    })).then(() => showSnuToast('✓ ' + (key === 'alliance' ? 'Alliance' : 'Census') + ' tile ' + (_tileData[key].visible !== false ? 'shown' : 'hidden') + '!'))
+    .catch(() => showSnuToast('⚠ Save failed.'));
   }
 
   // ── Save tile content from admin ─────────────────────────────
   function saveTileContent(key) {
     const gv = id => document.getElementById(id)?.value?.trim() || '';
     const data = {
-      title: gv(key + 'Title') || (key === 'alliance' ? 'Alliance Program' : 'Group Health Census'),
-      desc:  gv(key + 'Desc'),
-      body:  gv(key + 'Body'),
-      url:   gv(key + 'Url'),
+      title:   gv(key + 'Title') || (key === 'alliance' ? 'Alliance Program' : 'Group Health Census'),
+      desc:    gv(key + 'Desc'),
+      body:    gv(key + 'Body'),
+      url:     gv(key + 'Url'),
+      visible: _tileData[key]?.visible !== false,  // preserve current toggle state
     };
     _tileData[key] = data;
     updateTileCardDesc(key);
