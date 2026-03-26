@@ -5493,7 +5493,7 @@ When answering:
   const JB_MASTER_KEY    = '$2a$10$dCpyXKmwk3yUN0kAuZJ7Huw0/Ht4CwwOBh2ydi1ATORn8Vo96oXVC';
   const JB_BASE          = 'https://api.jsonbin.io/v3';
   const JB_MAIN_BIN      = '69b2cd77aa77b81da9dbc6e6';
-  const JB_PHOTO_BIN_KEY          = 'mymedi_jb_photo_bin_id';
+  const JB_PHOTO_BIN_KEY          = 'ga_jb_photo_bin_id';
   const JB_PHOTO_BIN_HARDCODED = '69b2da94c3097a1dd51cd2cf';
   const JB_EMPTY         = { snu_data:{}, snu_article:{}, snu_spotlight:{}, snu_aom:{}, snu_updates:[], snu_trip:{agents:[],meta:{}} };
 
@@ -5588,10 +5588,10 @@ When answering:
     }
     window._jbRecord = record;
 
-    if (record.snu_data     && Object.keys(record.snu_data).length)    localStorage.setItem('snu_data_v1',      JSON.stringify(record.snu_data));
+    if (record.snu_data     && Object.keys(record.snu_data).length)    localStorage.setItem('ga_snu_data_v1',      JSON.stringify(record.snu_data));
     if (record.snu_article  && Object.keys(record.snu_article).length)  localStorage.setItem('snu_article_v1',   JSON.stringify(record.snu_article));
-    if (record.snu_spotlight?.name)                                      localStorage.setItem('snu_spotlight_v1', JSON.stringify(record.snu_spotlight));
-    if (record.snu_aom      && Object.keys(record.snu_aom).length)      localStorage.setItem('snu_aom_v1',       JSON.stringify(record.snu_aom));
+    if (record.snu_spotlight?.name)                                      localStorage.setItem('ga_snu_spotlight_v1', JSON.stringify(record.snu_spotlight));
+    if (record.snu_aom      && Object.keys(record.snu_aom).length)      localStorage.setItem('ga_snu_aom_v1',       JSON.stringify(record.snu_aom));
     // snu_trip now handled by Supabase trip_tracker table
 
     if (typeof renderSnuFromStorage === 'function') renderSnuFromStorage();
@@ -5603,16 +5603,16 @@ When answering:
 
   // ── Save a field ──────────────────────────────────────────────
   window.jbSave = async function(field, value) {
-    const lsMap = { snu_data:'snu_data_v1', snu_article:'snu_article_v1', snu_spotlight:'snu_spotlight_v1', snu_aom:'snu_aom_v1', snu_updates:'snu_updates_v1', snu_trip:'snu_trip_v1' };
+    const lsMap = { snu_data:'ga_snu_data_v1', snu_article:'snu_article_v1', snu_spotlight:'ga_snu_spotlight_v1', snu_aom:'ga_snu_aom_v1', snu_updates:'ga_snu_updates_v1', snu_trip:'ga_snu_trip_v1' };
     if (lsMap[field]) { try { localStorage.setItem(lsMap[field], JSON.stringify(value)); } catch(e) {} }
 
     // Save photos to photo bin
     if (field === 'snu_spotlight') {
-      const aom = (() => { try { return JSON.parse(localStorage.getItem('snu_aom_v1')||'{}'); } catch(e){return{};} })();
+      const aom = (() => { try { return JSON.parse(localStorage.getItem('ga_snu_aom_v1')||'{}'); } catch(e){return{};} })();
       jbSavePhotos(value?.photo||null, aom);
     }
     if (field === 'snu_aom') {
-      const sp = (() => { try { return JSON.parse(localStorage.getItem('snu_spotlight_v1')||'{}'); } catch(e){return{};} })();
+      const sp = (() => { try { return JSON.parse(localStorage.getItem('ga_snu_spotlight_v1')||'{}'); } catch(e){return{};} })();
       jbSavePhotos(sp?.photo||null, value);
     }
 
@@ -5636,7 +5636,7 @@ When answering:
     const btn = document.querySelector('[onclick="syncAllToCloud()"]');
     if (btn) { btn.textContent = '⏳ Syncing…'; btn.disabled = true; }
     const g = k => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch(e){ return null; } };
-    const record = { snu_data: g('snu_data_v1')||{}, snu_article: g('snu_article_v1')||{}, snu_spotlight: g('snu_spotlight_v1')||{}, snu_aom: g('snu_aom_v1')||{}, snu_updates: g('snu_updates_v1')||[] };
+    const record = { snu_data: g('ga_snu_data_v1')||{}, snu_article: g('snu_article_v1')||{}, snu_spotlight: g('ga_snu_spotlight_v1')||{}, snu_aom: g('ga_snu_aom_v1')||{}, snu_updates: g('ga_snu_updates_v1')||[] };
     const [ok] = await Promise.all([
       jbWriteBin(JB_MAIN_BIN, jbStripPhotos(record)),
       jbSavePhotos(record.snu_spotlight?.photo||null, record.snu_aom)
@@ -6400,7 +6400,7 @@ When answering:
   <script id="snu-script">
   // ── SNU CONFIG ─────────────────────────────────────────────────────────────
   const SNU_PW       = 'GAhub2025';
-  const STORAGE_KEY  = 'snu_data_v1';
+  const STORAGE_KEY  = 'ga_snu_data_v1';
   const ARTICLE_KEY  = 'snu_article_v1';
 
   // ── Global in-memory state — single source of truth for both dashboard + print ──
@@ -6639,7 +6639,7 @@ When answering:
     agents.sort((a, b) => (b.production || 0) - (a.production || 0));
 
     const top7 = agents.slice(0, 7).map(a => a.name);
-    const HISTORY_KEY = 'snu_exec_history_v1';
+    const HISTORY_KEY = 'ga_snu_exec_history_v1';
     let history = [];
     try { history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch(e) { history = []; }
     const entry = { weekLabel, dateRange, top7, savedAt: new Date().toISOString() };
@@ -6892,7 +6892,7 @@ When answering:
     if (spread) {
       let sp = null;
       // Try in-memory record first (has photo), fall back to localStorage
-      try { sp = window._jbRecord?.snu_spotlight || JSON.parse(localStorage.getItem('snu_spotlight_v1') || 'null'); } catch(e) {}
+      try { sp = window._jbRecord?.snu_spotlight || JSON.parse(localStorage.getItem('ga_snu_spotlight_v1') || 'null'); } catch(e) {}
       if (sp && sp.name) {
         const p = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         // Photo: tall enough to show full portrait, cover+top so face always visible
@@ -7164,7 +7164,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
 
   <script id="spotlight-script">
-  const SPOTLIGHT_KEY = 'snu_spotlight_v1';
+  const SPOTLIGHT_KEY = 'ga_snu_spotlight_v1';
 
   // ── Tab switcher ──────────────────────────────────────────────────────────
   function switchAtTab(panelId, btn) {
@@ -7375,7 +7375,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
 
   <script id="aom-script">
-  const AOM_KEY = 'snu_aom_v1';
+  const AOM_KEY = 'ga_snu_aom_v1';
   const AOM_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   let _aomData = {};          // { 0: {name,stat,note,photo}, 1: {...}, ... }
   let _aomEditingMonth = null;
@@ -7575,8 +7575,8 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   const SUPA_URL    = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
   const SUPA_KEY    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
   const SUPA_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
-  const UPD_HUB     = 'medi';
-  const UPD_STORAGE_KEY = 'snu_updates_v1';
+  const UPD_HUB     = 'ga';
+  const UPD_STORAGE_KEY = 'ga_snu_updates_v1';
   let _updates = [];
   let _updSaving = false;
   let _updAttachBase64 = null;
@@ -7817,8 +7817,8 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   const JB_SUPA_URL = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
   const JB_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
   const JB_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
-  const VID_HUB     = 'medi';
-  const VID_STORAGE_KEY = 'videos_v1';
+  const VID_HUB     = 'ga';
+  const VID_STORAGE_KEY = 'ga_videos_v1';
   let _videos = [];
   let _videosSaving = false;
 
@@ -8195,7 +8195,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   </div>
 
   <script id="trip-tracker-script">
-  const TRIP_KEY       = 'snu_trip_v1';
+  const TRIP_KEY       = 'ga_snu_trip_v1';
   const TRIP_START     = new Date('2026-01-01');
   const TRIP_END       = new Date('2027-06-30');
   const DEFAULT_GOAL   = 50000;  // pts — change to match your actual qualifying bar
@@ -8206,7 +8206,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   // ── Load & Render ──────────────────────────────────────────────────────────
   function loadTripData() {
     // Load from Supabase only
-    fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker?hub=eq.medi&select=data', {
+    fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker?hub=eq.ga&select=data', {
       headers: { 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q', 'Cache-Control': 'no-cache' }
     }).then(r => r.json()).then(rows => {
       if (rows && rows.length && rows[0].data) {
@@ -8353,11 +8353,11 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     renderTripTracker();
     const _tripPayload = JSON.stringify(data);
     const _tripHdrs = { 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q', 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
-    fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker?hub=eq.medi', {
+    fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker?hub=eq.ga', {
       method: 'DELETE', headers: { 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q' }
     }).then(() => fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker', {
       method: 'POST', headers: _tripHdrs,
-      body: JSON.stringify({ hub: 'medi', data: _tripPayload })
+      body: JSON.stringify({ hub: 'ga', data: _tripPayload })
     })).then(() => showSnuToast('✓ Trip data saved!'))
     .catch(() => showSnuToast('⚠ Save failed — check connection.'));
     // Reset CSV input
@@ -8374,7 +8374,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     _tripAgents = [];
     _tripMeta = {};
     renderTripTracker();
-    fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker?hub=eq.medi', {
+    fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker?hub=eq.ga', {
       method: 'DELETE', headers: { 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q' }
     }).then(() => showSnuToast('↺ Trip data cleared.'))
     .catch(() => showSnuToast('⚠ Clear failed.'));
@@ -8638,7 +8638,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   const FM_SUPA_URL = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
   const FM_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
   const FM_SVC_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
-  const FRIDAY_STORAGE_KEY = 'friday_meetings_v1';
+  const FRIDAY_STORAGE_KEY = 'ga_friday_meetings_v1';
   let _fridayMeetings = [];
 
   function initFridayMeetings() {
@@ -8650,7 +8650,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     _fridayMeetings = localMeetings;
     renderFridayMeetings(); renderFridayAdminList();
 
-    fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings?hub=eq.medi&select=data`, {
+    fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings?hub=eq.ga&select=data`, {
       headers: { 'apikey': FM_SVC_KEY, 'Authorization': 'Bearer ' + FM_SVC_KEY, 'Cache-Control': 'no-cache' }
     })
     .then(r => r.json())
@@ -8678,7 +8678,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     const payload = JSON.stringify(_fridayMeetings);
     // Safe upsert: try PATCH first, fall back to POST if no row exists
     const headers = { 'apikey': FM_SVC_KEY, 'Authorization': 'Bearer ' + FM_SVC_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
-    fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings?hub=eq.medi`, {
+    fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings?hub=eq.ga`, {
       method: 'PATCH',
       headers,
       body: JSON.stringify({ data: payload })
@@ -8692,7 +8692,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
       if (t === '[]' || t === '') {
         return fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings`, {
           method: 'POST', headers,
-          body: JSON.stringify({ hub: 'medi', data: payload })
+          body: JSON.stringify({ hub: 'ga', data: payload })
         });
       }
       return r;
@@ -8700,11 +8700,11 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     .then(() => { if (onSuccess) onSuccess(); })
     .catch(() => {
       // Last resort: DELETE then INSERT
-      fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings?hub=eq.medi`, {
+      fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings?hub=eq.ga`, {
         method: 'DELETE', headers: { 'apikey': FM_SVC_KEY, 'Authorization': 'Bearer ' + FM_SVC_KEY }
       }).then(() => fetch(`${FM_SUPA_URL}/rest/v1/friday_meetings`, {
         method: 'POST', headers,
-        body: JSON.stringify({ hub: 'medi', data: payload })
+        body: JSON.stringify({ hub: 'ga', data: payload })
       })).then(() => { if (onSuccess) onSuccess(); })
       .catch(e => { console.error('[FM SAVE]', e); showSnuToast('\u26a0 Save failed — check connection.'); });
     });
@@ -8853,7 +8853,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
   // ── Load layout from Supabase and apply ────────────────────────────────────
   function loadLayoutFromCloud() {
-    fetch(`${LAYOUT_SUPA}/rest/v1/tile_content?hub=eq.medi&key=eq.layout&select=data`, {
+    fetch(`${LAYOUT_SUPA}/rest/v1/tile_content?hub=eq.ga&key=eq.layout&select=data`, {
       headers: { 'apikey': LAYOUT_SKEY, 'Authorization': 'Bearer ' + LAYOUT_SKEY, 'Cache-Control': 'no-cache' }
     }).then(r => r.json()).then(rows => {
       if (rows && rows.length && rows[0].data) {
@@ -8871,10 +8871,10 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   function saveLayoutToCloud(order, vis) {
     const payload = JSON.stringify({ order, vis });
     const headers = { 'apikey': LAYOUT_SKEY, 'Authorization': 'Bearer ' + LAYOUT_SKEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
-    fetch(`${LAYOUT_SUPA}/rest/v1/tile_content?hub=eq.medi&key=eq.layout`, {
+    fetch(`${LAYOUT_SUPA}/rest/v1/tile_content?hub=eq.ga&key=eq.layout`, {
       method: 'DELETE', headers: { 'apikey': LAYOUT_SKEY, 'Authorization': 'Bearer ' + LAYOUT_SKEY }
     }).then(() => fetch(`${LAYOUT_SUPA}/rest/v1/tile_content`, {
-      method: 'POST', headers, body: JSON.stringify({ hub: 'medi', key: 'layout', data: payload })
+      method: 'POST', headers, body: JSON.stringify({ hub: 'ga', key: 'layout', data: payload })
     })).then(() => showSnuToast('✓ Layout saved!')).catch(() => {});
   }
 
@@ -9033,7 +9033,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
   <script id="cert-tracker-script">
   // ── CARRIER CERT TRACKER ───────────────────────────────────────────────────
-  const CERT_KEY = 'cert_tracker_v1';
+  const CERT_KEY = 'ga_cert_tracker_v1';
   const CERT_CARRIERS = ['RTS','AHIP','AARP/UHC','AETNA MA','AMERIHEALTH/IBC','ANTHEM','Ambetter','CIGNA MA','CLOVER','GetCovered','HBC','HUMANA','Oscar','WELLCARE','Devoted'];
 
   let _certAgents = []; // [{name, year, certs:{RTS:'Y', AHIP:'', ...}}]
@@ -9215,7 +9215,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
   const CERT_SUPA_URL = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
   const CERT_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
-  const CERT_HUB = 'medi';
+  const CERT_HUB = 'ga';
 
   function loadCertDataFromSupabase() {
     fetch(`${CERT_SUPA_URL}/rest/v1/cert_tracker?hub=eq.${CERT_HUB}&select=data`, {
@@ -9342,7 +9342,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
   // ── MEDICARE UPDATES (Libraries section) ─────────────────────────────────
   const MED_UPD_KEY  = 'med_updates_v1';
-  const MED_UPD_HUB  = 'medi';
+  const MED_UPD_HUB  = 'ga';
   let _medUpdates    = [];
   let _medUpdDragSrc = null;
   let _medUpdFile64  = null;
@@ -9519,7 +9519,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
 
   // ── NOTE FROM THE PRESIDENT ───────────────────────────────────────────────
   const PRES_KEY  = 'president_note_v1';
-  const PRES_HUB  = 'medi';
+  const PRES_HUB  = 'ga';
 
   function loadPresidentNote() {
     fetch(`${SUPA_BASE}/rest/v1/president_note?hub=eq.${PRES_HUB}&select=data`, {
@@ -9605,13 +9605,13 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   <script id="article-locker-script">
   // ══════════════════════════════════════════════════════════════
   //  ARTICLE LOCKER
-  //  Storage: Supabase table `article_locker` (hub = 'medi')
+  //  Storage: Supabase table `article_locker` (hub = 'ga')
   //  localStorage key: article_locker_v1
   //  Active index key: article_locker_idx_v1
   // ══════════════════════════════════════════════════════════════
   const ART_KEY      = 'article_locker_v1';
   const ART_IDX_KEY  = 'article_locker_idx_v1';
-  const ART_HUB      = 'medi';
+  const ART_HUB      = 'ga';
   const ART_SUPA     = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
   const ART_SKEY     = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
 
@@ -9873,7 +9873,7 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
   // ── Load both tiles from Supabase on page load ───────────────
   function loadTileContent() {
     ['alliance','census'].forEach(key => {
-      fetch(`${TILE_SUPA}/rest/v1/tile_content?hub=eq.medi&key=eq.${key}&select=data`, {
+      fetch(`${TILE_SUPA}/rest/v1/tile_content?hub=eq.ga&key=eq.${key}&select=data`, {
         headers: { 'apikey': TILE_KEY2, 'Authorization': 'Bearer ' + TILE_KEY2, 'Cache-Control': 'no-cache' }
       }).then(r => r.json()).then(rows => {
         if (rows && rows.length && rows[0].data) {
@@ -9928,10 +9928,10 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     const d = _tileData[key] || {};
     const payload = JSON.stringify(d);
     const headers = { 'apikey': TILE_KEY2, 'Authorization': 'Bearer ' + TILE_KEY2, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
-    fetch(`${TILE_SUPA}/rest/v1/tile_content?hub=eq.medi&key=eq.${key}`, {
+    fetch(`${TILE_SUPA}/rest/v1/tile_content?hub=eq.ga&key=eq.${key}`, {
       method: 'DELETE', headers: { 'apikey': TILE_KEY2, 'Authorization': 'Bearer ' + TILE_KEY2 }
     }).then(() => fetch(`${TILE_SUPA}/rest/v1/tile_content`, {
-      method: 'POST', headers, body: JSON.stringify({ hub: 'medi', key, data: payload })
+      method: 'POST', headers, body: JSON.stringify({ hub: 'ga', key, data: payload })
     })).then(() => showSnuToast('✓ ' + (key === 'alliance' ? 'Alliance' : 'Census') + ' tile ' + (_tileData[key].visible !== false ? 'shown' : 'hidden') + '!'))
     .catch(() => showSnuToast('⚠ Save failed.'));
   }
@@ -9951,10 +9951,10 @@ ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + 
     const payload = JSON.stringify(data);
     const headers = { 'apikey': TILE_KEY2, 'Authorization': 'Bearer ' + TILE_KEY2, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
     // PATCH first, POST if no row
-    fetch(`${TILE_SUPA}/rest/v1/tile_content?hub=eq.medi&key=eq.${key}`, {
+    fetch(`${TILE_SUPA}/rest/v1/tile_content?hub=eq.ga&key=eq.${key}`, {
       method: 'DELETE', headers: { 'apikey': TILE_KEY2, 'Authorization': 'Bearer ' + TILE_KEY2 }
     }).then(() => fetch(`${TILE_SUPA}/rest/v1/tile_content`, {
-      method: 'POST', headers, body: JSON.stringify({ hub: 'medi', key, data: payload })
+      method: 'POST', headers, body: JSON.stringify({ hub: 'ga', key, data: payload })
     })).then(() => showSnuToast('✓ ' + (key === 'alliance' ? 'Alliance Program' : 'Census Form') + ' saved!'))
     .catch(() => showSnuToast('⚠ Save failed.'));
   }
