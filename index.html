@@ -7910,6 +7910,10 @@ if (btn) btn.textContent = '\ud83d\udc64 Agent Login';
 window.submitHubGateLogin = function() {
 var SUPA_URL = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
 var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
+// ── Admin bypass: these emails skip the GA directory check ──
+var ADMIN_BYPASS = [
+'brdeross@fjins.net'
+];
 var email = (document.getElementById('hubGateEmail')?.value || '').trim().toLowerCase();
 var status = document.getElementById('hubGateStatus');
 if (!email || !email.includes('@')) {
@@ -7917,6 +7921,14 @@ if (status) { status.textContent = 'Please enter your email address.'; status.st
 return;
 }
 if (status) { status.textContent = 'Verifying...'; status.style.color = 'var(--muted)'; }
+// Check admin bypass first
+if (ADMIN_BYPASS.indexOf(email) !== -1) {
+var session = { name: 'Admin', email: email, role: 'admin', signedInAt: new Date().toISOString() };
+writeHubSession(session);
+applyHubSessionUi();
+if (typeof showSnuToast === 'function') showSnuToast('✓ Admin bypass — welcome!');
+return;
+}
 fetch(SUPA_URL + '/rest/v1/agent_directory?hub=eq.ga&select=data', {
 headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Cache-Control': 'no-cache' }
 })
