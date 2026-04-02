@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+file:///C:/Users/bdeross/Downloads/2026%20Bonus%20Program.pdf<!DOCTYPE html>
 <html lang="en"><!-- GA Hub v2026-03-12 14:27 -->
 <head>
 <meta charset="UTF-8" />
@@ -9855,7 +9855,9 @@ renderLayoutAdmin();
 }).catch(() => {});
 }
 // ── Save layout to Supabase (PATCH-then-POST upsert) ──────────────────────
+let _layoutSaveCooldown = false;
 function saveLayoutToCloud(order, vis) {
+_layoutSaveCooldown = true;
 const payload = JSON.stringify({ order, vis });
 const baseHeaders = { 'apikey': LAYOUT_SKEY, 'Authorization': 'Bearer ' + LAYOUT_SKEY, 'Content-Type': 'application/json' };
 // PATCH first
@@ -9873,7 +9875,43 @@ headers: Object.assign({}, baseHeaders, { 'Prefer': 'return=minimal' }),
 body: JSON.stringify({ hub: 'ga', key: 'layout', data: payload })
 });
 }
-}).then(() => showSnuToast('✓ Layout saved!')).catch(() => showSnuToast('⚠ Layout save failed.'));
+}).then(() => {
+showSnuToast('✓ Layout saved!');
+setTimeout(() => { _layoutSaveCooldown = false; }, 15000);
+}).catch(() => {
+showSnuToast('⚠ Layout save failed.');
+_layoutSaveCooldown = false;
+});
+}
+// ── Live sync: poll Supabase every 10s so all agents see visibility changes ─
+let _layoutSnapshot = null;
+function syncLayoutFromCloud() {
+if (_layoutSaveCooldown) return;
+fetch(`${LAYOUT_SUPA}/rest/v1/tile_content?hub=eq.ga&key=eq.layout&select=data`, {
+headers: { 'apikey': LAYOUT_SKEY, 'Authorization': 'Bearer ' + LAYOUT_SKEY, 'Cache-Control': 'no-cache' }
+}).then(r => r.json()).then(rows => {
+if (!rows || !rows.length || !rows[0].data) return;
+const raw = rows[0].data;
+const snap = typeof raw === 'string' ? raw : JSON.stringify(raw);
+if (snap === _layoutSnapshot) return; // no change
+_layoutSnapshot = snap;
+const d = typeof raw === 'string' ? JSON.parse(raw) : raw;
+if (d.order && d.order.length) { _layoutOrder = d.order; }
+if (d.vis) { _layoutVis = d.vis; } else { _layoutVis = {}; }
+applySectionOrder();
+}).catch(() => {});
+}
+function startLayoutLiveSync() {
+// Capture initial snapshot
+fetch(`${LAYOUT_SUPA}/rest/v1/tile_content?hub=eq.ga&key=eq.layout&select=data`, {
+headers: { 'apikey': LAYOUT_SKEY, 'Authorization': 'Bearer ' + LAYOUT_SKEY, 'Cache-Control': 'no-cache' }
+}).then(r => r.json()).then(rows => {
+if (rows && rows.length && rows[0].data) {
+const raw = rows[0].data;
+_layoutSnapshot = typeof raw === 'string' ? raw : JSON.stringify(raw);
+}
+}).catch(() => {});
+setInterval(syncLayoutFromCloud, 10000);
 }
 function getSectionOrder() {
 const sectionIds = LAYOUT_SECTIONS.filter(s => !s.isCard).map(s => s.id);
@@ -9920,6 +9958,10 @@ const el = document.getElementById(s.id);
 if (!el) return;
 const hidden = vis[s.id] === false;
 el.style.display = hidden ? 'none' : '';
+// Also hide/show matching nav links in desktop nav, mobile nav, and bottom nav
+document.querySelectorAll('nav a[href="#' + s.id + '"], .mobile-bottom-nav a[href="#' + s.id + '"]').forEach(link => {
+link.style.display = hidden ? 'none' : '';
+});
 }
 });
 }
@@ -10028,6 +10070,7 @@ _layoutDragSrc = null;
 document.addEventListener('DOMContentLoaded', () => {
 applySectionOrder();
 loadLayoutFromCloud();
+startLayoutLiveSync();
 });
 // Hook into switchAdminTab
 const _origSwitchAdminTab = typeof switchAdminTab === 'function' ? switchAdminTab : null;
