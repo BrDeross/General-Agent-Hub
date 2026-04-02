@@ -4837,7 +4837,6 @@ style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;backgro
 <button class="admin-tab" onclick="switchAdminTab('forms',this)">📁 Forms Locker</button>
 <button class="admin-tab" onclick="switchAdminTab('layout',this)">🔀 Layout</button>
 <button class="admin-tab" onclick="switchAdminTab('notifications',this)">🔔 Notifications</button>
-<button class="admin-tab" onclick="switchAdminTab('visibility',this)">👁️ Visibility</button>
 </div>
 <!-- ── Tab: SNU Data ── -->
 <!-- ── Tab: Agent Directory ── -->
@@ -5726,17 +5725,6 @@ Build a library of articles. Each time you save the SNU leaderboard, the spotlig
 <button onclick="pushNotification()" style="padding:8px 20px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">🔔 Push to All Agents</button>
 </div>
 </div><!-- /adminTabNotifications -->
-<!-- ── Tab: Visibility ── -->
-<div id="adminTabVisibility" class="admin-tab-panel">
-<div class="admin-body">
-<div class="admin-section-title">👁️ Section Visibility</div>
-<p style="font-size:12px;color:var(--muted-2);margin-bottom:14px;">Toggle sections on or off for GA Hub agents. Hidden sections won't appear on the agent-facing page. Changes save to Supabase instantly.</p>
-<div id="visToggleList" style="display:flex;flex-direction:column;gap:8px;"></div>
-<div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
-<button onclick="resetAllVisibility()" style="padding:8px 20px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">↺ Show All Sections</button>
-</div>
-</div>
-</div><!-- /adminTabVisibility -->
 <!-- ── STANDALONE PUSH NOTIFICATION (no IIFE dependency) ── -->
 <script>
 window.pushNotification = function() {
@@ -9843,6 +9831,7 @@ const LAYOUT_SECTIONS = [
 { id: 'agent-spotlight', label: '⭐ Agent Spotlight' },
 { id: 'agent-of-the-month', label: '🗓️ Agent of the Month' },
 { id: 'operations-ai', label: '🤖 Agent Assistant' },
+{ id: 'card:agent-directory', label: '👥 Agent Directory', isCard: true },
 ];
 const LAYOUT_KEY = 'ga_section_order_v2';
 const LAYOUT_VIS_KEY = 'ga_section_vis_v2';
@@ -9887,7 +9876,8 @@ body: JSON.stringify({ hub: 'ga', key: 'layout', data: payload })
 }).then(() => showSnuToast('✓ Layout saved!')).catch(() => showSnuToast('⚠ Layout save failed.'));
 }
 function getSectionOrder() {
-return (_layoutOrder && _layoutOrder.length) ? [..._layoutOrder] : LAYOUT_SECTIONS.map(s => s.id);
+const sectionIds = LAYOUT_SECTIONS.filter(s => !s.isCard).map(s => s.id);
+return (_layoutOrder && _layoutOrder.length) ? [..._layoutOrder].filter(id => sectionIds.includes(id)) : sectionIds;
 }
 function getSectionVis() {
 return _layoutVis || {};
@@ -9897,7 +9887,7 @@ _layoutVis = vis;
 saveLayoutToCloud(_layoutOrder, vis);
 }
 function applySectionOrder() {
-const order = _layoutOrder && _layoutOrder.length ? _layoutOrder : LAYOUT_SECTIONS.map(s => s.id);
+const order = _layoutOrder && _layoutOrder.length ? _layoutOrder.filter(id => LAYOUT_SECTIONS.some(s => s.id === id && !s.isCard)) : LAYOUT_SECTIONS.filter(s => !s.isCard).map(s => s.id);
 const vis = _layoutVis || {};
 const page = document.querySelector('.page');
 if (!page) return;
@@ -9918,10 +9908,19 @@ page.appendChild(el);
 });
 // Apply visibility
 LAYOUT_SECTIONS.forEach(s => {
+if (s.isCard) {
+// Card-level toggle: hide/show by data-card-id
+const cardId = s.id.replace('card:', '');
+const card = document.querySelector('[data-card-id="' + cardId + '"]');
+if (!card) return;
+const hidden = vis[s.id] === false;
+card.style.display = hidden ? 'none' : '';
+} else {
 const el = document.getElementById(s.id);
 if (!el) return;
 const hidden = vis[s.id] === false;
 el.style.display = hidden ? 'none' : '';
+}
 });
 }
 function toggleSectionVis(id) {
@@ -9937,7 +9936,7 @@ _layoutOrder = order;
 saveLayoutToCloud(order, getSectionVis());
 }
 function resetSectionOrder() {
-_layoutOrder = LAYOUT_SECTIONS.map(s => s.id);
+_layoutOrder = LAYOUT_SECTIONS.filter(s => !s.isCard).map(s => s.id);
 _layoutVis = {};
 saveLayoutToCloud(_layoutOrder, _layoutVis);
 applySectionOrder();
@@ -9951,7 +9950,8 @@ const order = getSectionOrder();
 const vis = getSectionVis();
 const labelMap = {};
 LAYOUT_SECTIONS.forEach(s => labelMap[s.id] = s.label);
-list.innerHTML = order.map((id, i) => {
+// Render draggable section rows
+let html = order.map((id, i) => {
 const visible = vis[id] !== false;
 return `
 <div class="layout-row" draggable="true" data-id="${id}" data-index="${i}"
@@ -9969,6 +9969,24 @@ ${visible ? '👁 Visible' : '🙈 Hidden'}
 </button>
 </div>`;
 }).join('');
+// Render card-level toggle rows (non-draggable)
+const cardItems = LAYOUT_SECTIONS.filter(s => s.isCard);
+if (cardItems.length) {
+html += '<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--muted-2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;">Individual Features</div>';
+cardItems.forEach(s => {
+const visible = vis[s.id] !== false;
+html += `
+<div style="display:flex;align-items:center;gap:12px;padding:11px 14px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;opacity:${visible?1:.45};">
+<span style="color:var(--muted-2);font-size:14px;line-height:1;">◆</span>
+<span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">${s.label}</span>
+<button onclick="toggleSectionVis('${s.id}')" title="${visible?'Hide':'Show'}"
+style="padding:5px 12px;border-radius:7px;border:1px solid ${visible?'rgba(34,197,94,.3)':'rgba(255,255,255,.1)'};background:${visible?'rgba(34,197,94,.12)':'rgba(255,255,255,.04)'};color:${visible?'#22c55e':'var(--muted)'};font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;">
+${visible ? '👁 Visible' : '🙈 Hidden'}
+</button>
+</div>`;
+});
+}
+list.innerHTML = html;
 }
 let _layoutDragSrc = null;
 function layoutDragStart(e) {
@@ -10018,36 +10036,9 @@ const origFn = window.switchAdminTab;
 window.switchAdminTab = function(tab, el) {
 origFn(tab, el);
 if (tab === 'layout') { renderLayoutAdmin(); renderTileOrderAdmin(); }
-if (tab === 'visibility') { renderVisibilityAdmin(); }
 if (tab === 'updates') loadMedUpdates();
 };
 });
-// ── VISIBILITY TAB FUNCTIONS ──────────────────────────────────────────────
-function renderVisibilityAdmin() {
-const list = document.getElementById('visToggleList');
-if (!list) return;
-const vis = getSectionVis();
-list.innerHTML = LAYOUT_SECTIONS.map(s => {
-const visible = vis[s.id] !== false;
-return `
-<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,.04);border:1px solid ${visible ? 'rgba(34,197,94,.2)' : 'rgba(255,255,255,.08)'};border-radius:10px;opacity:${visible ? 1 : .55};">
-<span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">${s.label}</span>
-<label style="position:relative;display:inline-block;width:44px;height:24px;cursor:pointer;">
-<input type="checkbox" ${visible ? 'checked' : ''} onchange="toggleSectionVis('${s.id}')" style="opacity:0;width:0;height:0;">
-<span style="position:absolute;inset:0;background:${visible ? 'rgba(34,197,94,.5)' : 'rgba(255,255,255,.12)'};border-radius:12px;transition:background .2s;"></span>
-<span style="position:absolute;top:2px;left:${visible ? '22px' : '2px'};width:20px;height:20px;background:#fff;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3);"></span>
-</label>
-</div>`;
-}).join('');
-}
-function resetAllVisibility() {
-_layoutVis = {};
-saveLayoutToCloud(_layoutOrder, _layoutVis);
-applySectionOrder();
-renderVisibilityAdmin();
-renderLayoutAdmin();
-showSnuToast('👁 All sections visible.');
-}
 // ── TILE ORDER WITHIN SECTIONS ─────────────────────────────────────────────
 const TILE_GRIDS = [
 { gridId: 'grid-agent-tools', adminId: 'tileOrderTools' },
