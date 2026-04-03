@@ -4662,6 +4662,17 @@ style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;backgro
 <div class="trip-legend-item"><div class="trip-legend-dot q"></div> Qualified</div>
 <div class="trip-legend-item"><div class="trip-legend-dot nq"></div> In Progress</div>
 </div>
+<div style="margin-top:16px;padding:14px 18px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.18);border-radius:12px;">
+<div style="font-size:12px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;">⚠️ Double Points do not count towards the trip goal</div>
+<div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;">Goal Legend:</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px 16px;">
+<span style="font-size:12px;color:#e2e8f0;">🟢 <strong>Rookies:</strong> $250,000</span>
+<span style="font-size:12px;color:#e2e8f0;">🔵 <strong>Under 5 Years:</strong> $300,000</span>
+<span style="font-size:12px;color:#e2e8f0;">🟣 <strong>5+ Years:</strong> $550,000</span>
+<span style="font-size:12px;color:#e2e8f0;">🏆 <strong>Lifetime Millionaires:</strong> $450,000</span>
+</div>
+<div style="font-size:11px;font-weight:700;color:var(--gold);margin-top:8px;">NO Double Points included</div>
+</div>
 </div>
 </div>
 </div>
@@ -6160,7 +6171,7 @@ if (record.snu_spotlight?.name) localStorage.setItem('ga_snu_spotlight_v1', JSON
 if (record.snu_aom && Object.keys(record.snu_aom).length) localStorage.setItem('ga_snu_aom_v1', JSON.stringify(record.snu_aom));
 // snu_trip now handled by Supabase trip_tracker table
 if (typeof renderSnuFromStorage === 'function') renderSnuFromStorage();
-if (typeof renderAllAomCards === 'function') renderAllAomCards();
+if (typeof initAom === 'function') initAom();
 if (typeof renderSpotlightCard === 'function') renderSpotlightCard(record.snu_spotlight?.name ? record.snu_spotlight : undefined);
 if (typeof showSnuToast === 'function') showSnuToast('☁️ Data loaded from cloud!');
 };
@@ -8357,7 +8368,7 @@ localStorage.setItem(AOM_KEY, JSON.stringify(slim));
 showSnuToast('⚠ Photo too large — saved without photo. Use a smaller image.');
 }
 if (typeof jbSave === 'function') jbSave('snu_aom', _aomData);
-renderAomCard(_aomEditingMonth);
+renderAllAomCards();
 refreshAomAdminPicker();
 showSnuToast('✓ ' + AOM_MONTHS[_aomEditingMonth] + ' saved!');
 }
@@ -8368,7 +8379,7 @@ delete _aomData[_aomEditingMonth];
 localStorage.setItem(AOM_KEY, JSON.stringify(_aomData));
 if (typeof jbSave === 'function') jbSave('snu_aom', _aomData);
 _aomPhotoBase64 = null;
-renderAomCard(_aomEditingMonth);
+renderAllAomCards();
 refreshAomAdminPicker();
 // Reset form
 ['aomAgentName','aomAgentStat','aomAgentNote'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
@@ -9304,20 +9315,30 @@ renderTripAdminEditor();
 }
 function persistTripData(successMsg) {
 const monthLabel = document.getElementById('tripMonthLabel')?.value?.trim() || _tripMeta.monthLabel || '';
-const goal = Number(document.getElementById('tripGoalInput')?.value) || DEFAULT_GOAL;
+const goalInputVal = document.getElementById('tripGoalInput')?.value;
+const goal = (goalInputVal !== '' && goalInputVal !== null && goalInputVal !== undefined && Number(goalInputVal) > 0)
+? Number(goalInputVal)
+: (Number(_tripMeta.qualifyingGoal) > 0 ? Number(_tripMeta.qualifyingGoal) : DEFAULT_GOAL);
 _tripMeta = { ..._tripMeta, qualifyingGoal: goal, monthLabel, updatedAt: new Date().toISOString() };
 const data = { agents: _tripAgents, meta: _tripMeta };
 _tripSaveCooldown = true;
 _tripSnapshot = tripSnapshot(data);
 const url = 'https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker';
-const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
-const hdrs = { 'apikey': key, 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
+const svcKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
+const hdrs = { 'apikey': svcKey, 'Authorization': 'Bearer ' + svcKey, 'Content-Type': 'application/json' };
+// PATCH-then-POST upsert
 return fetch(url + '?hub=eq.ga', {
-method: 'PATCH', headers: hdrs,
+method: 'PATCH',
+headers: Object.assign({}, hdrs, { 'Prefer': 'return=headers-only' }),
 body: JSON.stringify({ data })
-}).then(r => r.text()).then(t => {
-if (t === '[]' || t === '' || t === 'null') {
-return fetch(url, { method: 'POST', headers: hdrs, body: JSON.stringify({ hub: 'ga', data }) });
+}).then(r => {
+const count = parseInt(r.headers.get('content-range')?.split('/')[1] || '0', 10);
+if (count === 0) {
+return fetch(url, {
+method: 'POST',
+headers: Object.assign({}, hdrs, { 'Prefer': 'return=minimal' }),
+body: JSON.stringify({ hub: 'ga', data })
+});
 }
 }).then(() => {
 renderTripTracker();
@@ -9411,7 +9432,7 @@ _tripMeta = {};
 _tripSnapshot = tripSnapshot({ agents: [], meta: {} });
 renderTripTracker();
 renderTripAdminEditor();
-const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
+const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
 fetch('https://bjlzwmoogypfefjxvgyt.supabase.co/rest/v1/trip_tracker?hub=eq.ga', {
 method: 'DELETE', headers: { 'apikey': key, 'Authorization': 'Bearer ' + key }
 }).then(() => {
@@ -12180,7 +12201,7 @@ renderAllStarUi();
 <script>
 (function() {
 const NF_URL = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
-const NF_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
+const NF_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
 const NF_HUB = 'ga';
 const hdrs = (extra={}) => ({ 'apikey': NF_KEY, 'Authorization': 'Bearer ' + NF_KEY, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates', ...extra });
 const toast = msg => { if (typeof showSnuToast === 'function') showSnuToast(msg); };
@@ -12190,11 +12211,15 @@ function supaGet(table, params='') {
 return fetch(`${NF_URL}/rest/v1/${table}?hub=eq.${NF_HUB}&select=data${params}`, { headers: { 'apikey': NF_KEY, 'Authorization': 'Bearer ' + NF_KEY, 'Cache-Control': 'no-cache' } }).then(r=>r.json());
 }
 function supaUpsert(table, data) {
-const h = { 'apikey': NF_KEY, 'Authorization': 'Bearer ' + NF_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
-return fetch(`${NF_URL}/rest/v1/${table}?hub=eq.${NF_HUB}`, { method:'PATCH', headers: h, body: JSON.stringify({ data }) })
-.then(r => r.text()).then(t => {
-if (t === '[]' || t === '' || t === 'null') {
-return fetch(`${NF_URL}/rest/v1/${table}`, { method:'POST', headers: h, body: JSON.stringify({ hub: NF_HUB, data }) });
+const h = { 'apikey': NF_KEY, 'Authorization': 'Bearer ' + NF_KEY, 'Content-Type': 'application/json' };
+return fetch(`${NF_URL}/rest/v1/${table}?hub=eq.${NF_HUB}`, {
+method:'PATCH', headers: Object.assign({}, h, { 'Prefer': 'return=headers-only' }), body: JSON.stringify({ data })
+}).then(r => {
+const count = parseInt(r.headers.get('content-range')?.split('/')[1] || '0', 10);
+if (count === 0) {
+return fetch(`${NF_URL}/rest/v1/${table}`, {
+method:'POST', headers: Object.assign({}, h, { 'Prefer': 'return=minimal' }), body: JSON.stringify({ hub: NF_HUB, data })
+});
 }
 });
 }
@@ -13009,7 +13034,7 @@ document.addEventListener('DOMContentLoaded',()=>{ initTasks(); startNotificatio
 <script>
 (function() {
 const ANN_SUPA_URL = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
-const ANN_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
+const ANN_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
 const ANN_HUB = 'ga';
 const ANN_DISMISS_KEY = 'ann_dismissed_ga';
 function loadBanner() {
@@ -13136,7 +13161,7 @@ document.addEventListener('DOMContentLoaded', loadBanner);
 <script>
 (function() {
 const REORDER_SUPA_URL = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
-const REORDER_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
+const REORDER_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
 const REORDER_HUB = 'ga';
 const SECTIONS = ['agent-tools', 'quick-access', 'libraries'];
 let _savedOrders = {};
@@ -13584,7 +13609,7 @@ box-shadow: 0 4px 16px rgba(59,130,246,.2);
 (function(){
 'use strict';
 var CD_URL='https://bjlzwmoogypfefjxvgyt.supabase.co';
-var CD_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
+var CD_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
 var CD_HUB='ga',_cdTimers=[],_cdInterval=null,_cdEditId=null;
 function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
 function pad(n){return n<10?'0'+n:String(n);}
@@ -13683,7 +13708,7 @@ gtag('config', 'G-KBEJ843NYN');
 'use strict';
 var TRACK_HUB = 'ga';
 var SUPA_URL = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
-var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjUzNDAsImV4cCI6MjA4OTQ0MTM0MH0.HbYn4njaUvTt8JKqVylzITeeXl7Wh57XdthtFdclGVw';
+var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
 var _sid = sessionStorage.getItem('ga_sid');
 if (!_sid) {
 _sid = 'sess_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,8);
