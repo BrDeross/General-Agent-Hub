@@ -3985,6 +3985,68 @@ cursor: pointer; white-space: nowrap;
 }
 .cl-add-btn:hover { background: #2563eb; }
 .cl-empty { font-size: 12px; color: rgba(255,255,255,.3); font-style: italic; padding: 8px 2px; }
+
+/* ── ANCILLARY FINDER MY MEDI OVERRIDES ── */
+#ancillaryOverlay .feature-modal {
+  background: linear-gradient(160deg, #1e3d72 0%, #213f7a 100%);
+  border: 1px solid var(--border-2);
+  box-shadow: 0 32px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(125,211,252,.08);
+}
+#ancillaryOverlay .feature-modal-header {
+  background: linear-gradient(135deg, #0f2147, #17325f);
+}
+#ancillaryOverlay .feature-modal-title h3 { font-family:'Space Grotesk',sans-serif; font-size:18px; color:#fff; }
+#ancillaryOverlay .feature-modal-title p { font-size:12px; color:var(--muted); }
+#ancillaryOverlay .feature-modal-body { padding: 24px; }
+#ancillaryOverlay .anc-filter-grid > div,
+#ancillaryOverlay .anc-compare-bar,
+#ancillaryOverlay .anc-card,
+#ancillaryCompareOverlay .anc-compare-table-wrap {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+}
+#ancillaryOverlay .anc-filter-grid > div { padding: 12px; }
+#ancillaryOverlay .anc-filter-grid > div:last-child { background: transparent; border: none; padding: 0; }
+#ancillaryOverlay .anc-search-input,
+#ancillaryOverlay .anc-select,
+#ancillaryOverlay .anc-textarea {
+  background: rgba(15,33,71,.72);
+  border: 1px solid rgba(255,255,255,.12);
+  min-height: 42px;
+}
+#ancillaryOverlay .anc-search-input:focus,
+#ancillaryOverlay .anc-select:focus,
+#ancillaryOverlay .anc-textarea:focus {
+  border-color: var(--accent-2);
+  box-shadow: 0 0 0 3px rgba(59,130,246,.12);
+}
+#ancillaryOverlay .anc-card {
+  padding: 18px;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+#ancillaryOverlay .anc-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(125,211,252,.28);
+  box-shadow: 0 10px 28px rgba(0,0,0,.22);
+}
+#ancillaryOverlay .anc-name { font-size: 16px; }
+#ancillaryOverlay .anc-product { font-size: 12.5px; }
+#ancillaryOverlay .anc-chip { background: rgba(255,255,255,.07); }
+#ancillaryOverlay .anc-chip.active { background: rgba(45,212,191,.14); }
+#ancillaryOverlay .anc-resource-btn,
+#ancillaryOverlay .anc-compare-btn,
+#ancillaryCompareOverlay .anc-resource-btn {
+  min-height: 36px;
+  border-radius: 10px;
+}
+#ancillaryCompareOverlay .feature-modal {
+  background: linear-gradient(160deg, #1e3d72 0%, #213f7a 100%);
+  border: 1px solid var(--border-2);
+  box-shadow: 0 32px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(251,191,36,.08);
+}
+#ancillaryCompareOverlay .feature-modal-header { background: linear-gradient(135deg, #0f2147, #17325f); }
+
 </style>
 </head>
 <body class="hub-login-pending">
@@ -7854,25 +7916,25 @@ document.addEventListener('DOMContentLoaded', function(){
   setHTML('#grid-agent-tools', `
     <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
-    </a>
+    </div>
     <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
-    </a>
+    </div>
     <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
-    </a>
+    </div>
     <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
-    </a>
+    </div>
     <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
-    </a>
+    </div>
     <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
     </div>
-    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#" onclick="event.preventDefault(); event.stopPropagation(); openAncillaryFinder(); return false;">
+    <div class="card" data-card-id="ancillary-finder" data-color="green" style="cursor:pointer;" onclick="openAncillaryFinder()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAncillaryFinder();}">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🩺</div><h3>Ancillary Carrier Finder</h3><p>Filter ancillary plans by category and state, then compare carriers side by side.</p><span class="card-tag">Ancillary</span>
-    </a>
+    </div>
   `);
 
   setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
@@ -10180,25 +10242,25 @@ document.addEventListener('DOMContentLoaded', function(){
   setHTML('#grid-agent-tools', `
     <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
-    </a>
+    </div>
     <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
-    </a>
+    </div>
     <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
-    </a>
+    </div>
     <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
-    </a>
+    </div>
     <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
-    </a>
+    </div>
     <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
     </div>
-    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#" onclick="event.preventDefault(); event.stopPropagation(); openAncillaryFinder(); return false;">
+    <div class="card" data-card-id="ancillary-finder" data-color="green" style="cursor:pointer;" onclick="openAncillaryFinder()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAncillaryFinder();}">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🩺</div><h3>Ancillary Carrier Finder</h3><p>Filter ancillary plans by category and state, then compare carriers side by side.</p><span class="card-tag">Ancillary</span>
-    </a>
+    </div>
   `);
 
   setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
@@ -10409,25 +10471,25 @@ document.addEventListener('DOMContentLoaded', function(){
   setHTML('#grid-agent-tools', `
     <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
-    </a>
+    </div>
     <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
-    </a>
+    </div>
     <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
-    </a>
+    </div>
     <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
-    </a>
+    </div>
     <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
-    </a>
+    </div>
     <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
     </div>
-    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#" onclick="event.preventDefault(); event.stopPropagation(); openAncillaryFinder(); return false;">
+    <div class="card" data-card-id="ancillary-finder" data-color="green" style="cursor:pointer;" onclick="openAncillaryFinder()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAncillaryFinder();}">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🩺</div><h3>Ancillary Carrier Finder</h3><p>Filter ancillary plans by category and state, then compare carriers side by side.</p><span class="card-tag">Ancillary</span>
-    </a>
+    </div>
   `);
 
   setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
@@ -10485,25 +10547,25 @@ document.addEventListener('DOMContentLoaded', function(){
   setHTML('#grid-agent-tools', `
     <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
-    </a>
+    </div>
     <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
-    </a>
+    </div>
     <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
-    </a>
+    </div>
     <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
-    </a>
+    </div>
     <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
-    </a>
+    </div>
     <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
     </div>
-    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#" onclick="event.preventDefault(); event.stopPropagation(); openAncillaryFinder(); return false;">
+    <div class="card" data-card-id="ancillary-finder" data-color="green" style="cursor:pointer;" onclick="openAncillaryFinder()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAncillaryFinder();}">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🩺</div><h3>Ancillary Carrier Finder</h3><p>Filter ancillary plans by category and state, then compare carriers side by side.</p><span class="card-tag">Ancillary</span>
-    </a>
+    </div>
   `);
 
   setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
@@ -11556,25 +11618,25 @@ document.addEventListener('DOMContentLoaded', function(){
   setHTML('#grid-agent-tools', `
     <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
-    </a>
+    </div>
     <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
-    </a>
+    </div>
     <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
-    </a>
+    </div>
     <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
-    </a>
+    </div>
     <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
-    </a>
+    </div>
     <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
     </div>
-    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#" onclick="event.preventDefault(); event.stopPropagation(); openAncillaryFinder(); return false;">
+    <div class="card" data-card-id="ancillary-finder" data-color="green" style="cursor:pointer;" onclick="openAncillaryFinder()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAncillaryFinder();}">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🩺</div><h3>Ancillary Carrier Finder</h3><p>Filter ancillary plans by category and state, then compare carriers side by side.</p><span class="card-tag">Ancillary</span>
-    </a>
+    </div>
   `);
 
   setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
@@ -12308,25 +12370,25 @@ document.addEventListener('DOMContentLoaded', function(){
   setHTML('#grid-agent-tools', `
     <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
-    </a>
+    </div>
     <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
-    </a>
+    </div>
     <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
-    </a>
+    </div>
     <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
-    </a>
+    </div>
     <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
-    </a>
+    </div>
     <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
     </div>
-    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#" onclick="event.preventDefault(); event.stopPropagation(); openAncillaryFinder(); return false;">
+    <div class="card" data-card-id="ancillary-finder" data-color="green" style="cursor:pointer;" onclick="openAncillaryFinder()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAncillaryFinder();}">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🩺</div><h3>Ancillary Carrier Finder</h3><p>Filter ancillary plans by category and state, then compare carriers side by side.</p><span class="card-tag">Ancillary</span>
-    </a>
+    </div>
   `);
 
   setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
@@ -12713,25 +12775,25 @@ document.addEventListener('DOMContentLoaded', function(){
   setHTML('#grid-agent-tools', `
     <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
-    </a>
+    </div>
     <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
-    </a>
+    </div>
     <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
-    </a>
+    </div>
     <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
-    </a>
+    </div>
     <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
-    </a>
+    </div>
     <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
     </div>
-    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#" onclick="event.preventDefault(); event.stopPropagation(); openAncillaryFinder(); return false;">
+    <div class="card" data-card-id="ancillary-finder" data-color="green" style="cursor:pointer;" onclick="openAncillaryFinder()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAncillaryFinder();}">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🩺</div><h3>Ancillary Carrier Finder</h3><p>Filter ancillary plans by category and state, then compare carriers side by side.</p><span class="card-tag">Ancillary</span>
-    </a>
+    </div>
   `);
 
   setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
@@ -14858,25 +14920,25 @@ document.addEventListener('DOMContentLoaded', function(){
   setHTML('#grid-agent-tools', `
     <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
-    </a>
+    </div>
     <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
-    </a>
+    </div>
     <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
-    </a>
+    </div>
     <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
-    </a>
+    </div>
     <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
-    </a>
+    </div>
     <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
     </div>
-    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#" onclick="event.preventDefault(); event.stopPropagation(); openAncillaryFinder(); return false;">
+    <div class="card" data-card-id="ancillary-finder" data-color="green" style="cursor:pointer;" onclick="openAncillaryFinder()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAncillaryFinder();}">
       <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🩺</div><h3>Ancillary Carrier Finder</h3><p>Filter ancillary plans by category and state, then compare carriers side by side.</p><span class="card-tag">Ancillary</span>
-    </a>
+    </div>
   `);
 
   setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
