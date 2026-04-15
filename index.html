@@ -7798,6 +7798,77 @@ tr.deduct td { color: #dc2626; background: #fff5f5; }
 </table>
 ${notes ? '<p style="font-size:13px;color:#475569;"><strong>Notes:</strong> ' + notes + '</p>' : ''}
 <div class="note">This is a planning estimate — not underwriting or product advice. Use it to frame the protection conversation.</div>
+
+<script id="myMediMirrorPatch">
+document.addEventListener('DOMContentLoaded', function(){
+  function setHTML(sel, html){ const el=document.querySelector(sel); if(el) el.innerHTML=html; }
+  function setText(sel, txt){ const el=document.querySelector(sel); if(el) el.textContent=txt; }
+
+  setHTML('section#agent-tools .section-head .sh-left div:last-child', '<h2>Agent Tools</h2><p>Coaching, marketing, and planning resources</p>');
+  setText('section#agent-tools .count-chip', '7 tools');
+  setHTML('#grid-agent-tools', `
+    <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
+    </a>
+    <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
+    </a>
+    <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
+    </a>
+    <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
+    </a>
+    <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
+    </a>
+    <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
+    </div>
+    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#quick-access" onclick="event.preventDefault(); document.getElementById('quick-access')?.scrollIntoView({behavior:'smooth'});">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧭</div><h3>Ancillary Finder</h3><p>Quick-launch card added to mirror your expected My Medi tool lineup.</p><span class="card-tag">Ancillary</span>
+    </a>
+  `);
+
+  setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
+  setText('section#quick-access .count-chip', '6 portals');
+  setHTML('#grid-quick-access', `
+    <a class="card" data-card-id="agencybloc" data-color="rose" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🗂️</div><h3>AgencyBloc</h3><p>Jump straight into your CRM, pipeline, and activity management dashboard.</p><span class="card-tag">CRM</span></a>
+    <a class="card" data-card-id="csg" data-color="blue" href="https://www.insurancetoolsportal.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧰</div><h3>CSG</h3><p>Insurance Tools Portal for quoting and carrier resources.</p><span class="card-tag">Portal</span></a>
+    <a class="card" data-card-id="lapro" data-color="green" href="https://www.leadadvantagepro.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>LaPro</h3><p>Lead Advantage Pro for lead management and dialing.</p><span class="card-tag">Leads</span></a>
+    <a class="card" data-card-id="my-sms" data-color="teal" href="https://my.seniormarketsales.com/my-dashboard" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💬</div><h3>MY SMS</h3><p>Senior Market Sales dashboard and resources.</p><span class="card-tag">SMS</span></a>
+    <a class="card" data-card-id="nipr" data-color="gold" href="https://nipr.com/licensing-center" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📋</div><h3>NIPR</h3><p>National Insurance Producer Registry — licensing center.</p><span class="card-tag">Licensing</span></a>
+    <a class="card" data-card-id="ahip" data-color="purple" href="https://www.ahipmedicaretraining.com/page/login" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🏥</div><h3>AHIP</h3><p>Medicare training and certification portal.</p><span class="card-tag">Training</span></a>
+  `);
+
+  setHTML('section#libraries .section-head .sh-left div:last-child', '<h2>Agent Libraries</h2><p>Searchable knowledge tools for quick reference</p>');
+  setText('section#libraries .count-chip', '3 libraries');
+  setHTML('#grid-libraries', `
+    <a class="card" data-card-id="acronyms" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/acronyms-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📚</div><h3>Insurance Acronyms</h3><p>Quick lookup for Medicare, life, annuity, and group insurance terminology.</p><span class="card-tag">Reference</span></a>
+    <a class="card" data-card-id="hook-library" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/hook-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎣</div><h3>Content Hook Library</h3><p>Copy-paste hooks for Medicare, life, annuity, retirement, and insurance content.</p><span class="card-tag">Content</span></a>
+    <a class="card" data-card-id="one-liners" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/sales-one-liners/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚡</div><h3>Sales One-Liners</h3><p>Catchy, practical one-liners organized by call stage and sales situation.</p><span class="card-tag">Calls</span></a>
+  `);
+
+  const assistantLeft = document.querySelector('#operations-ai .ops-left');
+  if (assistantLeft) assistantLeft.innerHTML = `
+    <h2>Agent<br><span>Assistant</span></h2>
+    <p>Use the Agent Assistant GPT for help with Excel macros, AgencyBloc workflows, onboarding, reporting, underwriting assistance, carrier-specific questions, and internal operations support.</p>
+    <div class="ops-actions">
+      <a class="ops-btn primary" href="https://chatgpt.com/g/g-69b055fe86648191a5d8c5f255df0558-agent-assistant" target="_blank" rel="noopener noreferrer">Open Agent Assistant ↗</a>
+      <a class="ops-btn ghost" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer">Open AgencyBloc</a>
+      <button class="ops-btn ghost" onclick="copyPrompt()">Copy Starter Prompt</button>
+    </div>`;
+
+  const chatIntro = document.querySelector('.chat-bubble');
+  if (chatIntro) chatIntro.innerHTML = `<p>Hey! I'm <strong>Redi</strong>, your GA Hub Agent Assistant.</p><p>I can help you with Excel macros, underwriting questions, carrier-specific guidance, and more.</p><p>Click below to open a full chat session.</p>`;
+
+  const footerBrand = document.querySelector('.footer-brand');
+  const footerNote = document.querySelector('.footer-note');
+  if (footerBrand) footerBrand.textContent = 'GA Hub';
+  if (footerNote) footerNote.textContent = 'Internal resource center for agent tools, libraries, and planning calculators.';
+});
+</script>
+
 </body></html>`;
 const w = window.open('', '_blank', 'width=820,height=700,scrollbars=yes');
 if (!w) { showSnuToast('\u26a0 Allow pop-ups for this site to print.'); return; }
@@ -9492,7 +9563,78 @@ const img = body.querySelector('img');
 const ifr = body.querySelector('iframe');
 if (img) {
 const w = window.open('');
-w.document.write(`<html><body style="margin:0;display:flex;justify-content:center;"><img src="${img.src}" style="max-width:100%;"></body></html>`);
+w.document.write(`<html><body style="margin:0;display:flex;justify-content:center;"><img src="${img.src}" style="max-width:100%;">
+<script id="myMediMirrorPatch">
+document.addEventListener('DOMContentLoaded', function(){
+  function setHTML(sel, html){ const el=document.querySelector(sel); if(el) el.innerHTML=html; }
+  function setText(sel, txt){ const el=document.querySelector(sel); if(el) el.textContent=txt; }
+
+  setHTML('section#agent-tools .section-head .sh-left div:last-child', '<h2>Agent Tools</h2><p>Coaching, marketing, and planning resources</p>');
+  setText('section#agent-tools .count-chip', '7 tools');
+  setHTML('#grid-agent-tools', `
+    <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
+    </a>
+    <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
+    </a>
+    <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
+    </a>
+    <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
+    </a>
+    <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
+    </a>
+    <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
+    </div>
+    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#quick-access" onclick="event.preventDefault(); document.getElementById('quick-access')?.scrollIntoView({behavior:'smooth'});">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧭</div><h3>Ancillary Finder</h3><p>Quick-launch card added to mirror your expected My Medi tool lineup.</p><span class="card-tag">Ancillary</span>
+    </a>
+  `);
+
+  setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
+  setText('section#quick-access .count-chip', '6 portals');
+  setHTML('#grid-quick-access', `
+    <a class="card" data-card-id="agencybloc" data-color="rose" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🗂️</div><h3>AgencyBloc</h3><p>Jump straight into your CRM, pipeline, and activity management dashboard.</p><span class="card-tag">CRM</span></a>
+    <a class="card" data-card-id="csg" data-color="blue" href="https://www.insurancetoolsportal.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧰</div><h3>CSG</h3><p>Insurance Tools Portal for quoting and carrier resources.</p><span class="card-tag">Portal</span></a>
+    <a class="card" data-card-id="lapro" data-color="green" href="https://www.leadadvantagepro.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>LaPro</h3><p>Lead Advantage Pro for lead management and dialing.</p><span class="card-tag">Leads</span></a>
+    <a class="card" data-card-id="my-sms" data-color="teal" href="https://my.seniormarketsales.com/my-dashboard" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💬</div><h3>MY SMS</h3><p>Senior Market Sales dashboard and resources.</p><span class="card-tag">SMS</span></a>
+    <a class="card" data-card-id="nipr" data-color="gold" href="https://nipr.com/licensing-center" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📋</div><h3>NIPR</h3><p>National Insurance Producer Registry — licensing center.</p><span class="card-tag">Licensing</span></a>
+    <a class="card" data-card-id="ahip" data-color="purple" href="https://www.ahipmedicaretraining.com/page/login" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🏥</div><h3>AHIP</h3><p>Medicare training and certification portal.</p><span class="card-tag">Training</span></a>
+  `);
+
+  setHTML('section#libraries .section-head .sh-left div:last-child', '<h2>Agent Libraries</h2><p>Searchable knowledge tools for quick reference</p>');
+  setText('section#libraries .count-chip', '3 libraries');
+  setHTML('#grid-libraries', `
+    <a class="card" data-card-id="acronyms" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/acronyms-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📚</div><h3>Insurance Acronyms</h3><p>Quick lookup for Medicare, life, annuity, and group insurance terminology.</p><span class="card-tag">Reference</span></a>
+    <a class="card" data-card-id="hook-library" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/hook-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎣</div><h3>Content Hook Library</h3><p>Copy-paste hooks for Medicare, life, annuity, retirement, and insurance content.</p><span class="card-tag">Content</span></a>
+    <a class="card" data-card-id="one-liners" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/sales-one-liners/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚡</div><h3>Sales One-Liners</h3><p>Catchy, practical one-liners organized by call stage and sales situation.</p><span class="card-tag">Calls</span></a>
+  `);
+
+  const assistantLeft = document.querySelector('#operations-ai .ops-left');
+  if (assistantLeft) assistantLeft.innerHTML = `
+    <h2>Agent<br><span>Assistant</span></h2>
+    <p>Use the Agent Assistant GPT for help with Excel macros, AgencyBloc workflows, onboarding, reporting, underwriting assistance, carrier-specific questions, and internal operations support.</p>
+    <div class="ops-actions">
+      <a class="ops-btn primary" href="https://chatgpt.com/g/g-69b055fe86648191a5d8c5f255df0558-agent-assistant" target="_blank" rel="noopener noreferrer">Open Agent Assistant ↗</a>
+      <a class="ops-btn ghost" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer">Open AgencyBloc</a>
+      <button class="ops-btn ghost" onclick="copyPrompt()">Copy Starter Prompt</button>
+    </div>`;
+
+  const chatIntro = document.querySelector('.chat-bubble');
+  if (chatIntro) chatIntro.innerHTML = `<p>Hey! I'm <strong>Redi</strong>, your GA Hub Agent Assistant.</p><p>I can help you with Excel macros, underwriting questions, carrier-specific guidance, and more.</p><p>Click below to open a full chat session.</p>`;
+
+  const footerBrand = document.querySelector('.footer-brand');
+  const footerNote = document.querySelector('.footer-note');
+  if (footerBrand) footerBrand.textContent = 'GA Hub';
+  if (footerNote) footerNote.textContent = 'Internal resource center for agent tools, libraries, and planning calculators.';
+});
+</script>
+
+</body></html>`);
 w.document.close(); w.focus(); setTimeout(() => w.print(), 400);
 } else if (ifr) {
 // base64 PDFs can't be printed via contentWindow.print() — open in new tab instead
@@ -9652,13 +9794,155 @@ const SEP_FULL_DATA = 'data:application/pdf;base64,JVBERi0xLjUNJeLjz9MNCjQxNTggM
 function openCheatSheet() {
 const w = window.open('', '_blank', 'width=960,height=720');
 if (!w) { showSnuToast('\u26a0 Allow pop-ups to open PDFs.'); return; }
-w.document.write('<html><head><title>Election Period Cheat Sheet</title></head><body style="margin:0;height:100vh;"><embed src="' + SEP_CHEAT_DATA + '" type="application/pdf" width="100%" height="100%"></body></html>');
+w.document.write('<html><head><title>Election Period Cheat Sheet</title></head><body style="margin:0;height:100vh;"><embed src="' + SEP_CHEAT_DATA + '" type="application/pdf" width="100%" height="100%">
+<script id="myMediMirrorPatch">
+document.addEventListener('DOMContentLoaded', function(){
+  function setHTML(sel, html){ const el=document.querySelector(sel); if(el) el.innerHTML=html; }
+  function setText(sel, txt){ const el=document.querySelector(sel); if(el) el.textContent=txt; }
+
+  setHTML('section#agent-tools .section-head .sh-left div:last-child', '<h2>Agent Tools</h2><p>Coaching, marketing, and planning resources</p>');
+  setText('section#agent-tools .count-chip', '7 tools');
+  setHTML('#grid-agent-tools', `
+    <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
+    </a>
+    <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
+    </a>
+    <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
+    </a>
+    <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
+    </a>
+    <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
+    </a>
+    <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
+    </div>
+    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#quick-access" onclick="event.preventDefault(); document.getElementById('quick-access')?.scrollIntoView({behavior:'smooth'});">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧭</div><h3>Ancillary Finder</h3><p>Quick-launch card added to mirror your expected My Medi tool lineup.</p><span class="card-tag">Ancillary</span>
+    </a>
+  `);
+
+  setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
+  setText('section#quick-access .count-chip', '6 portals');
+  setHTML('#grid-quick-access', `
+    <a class="card" data-card-id="agencybloc" data-color="rose" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🗂️</div><h3>AgencyBloc</h3><p>Jump straight into your CRM, pipeline, and activity management dashboard.</p><span class="card-tag">CRM</span></a>
+    <a class="card" data-card-id="csg" data-color="blue" href="https://www.insurancetoolsportal.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧰</div><h3>CSG</h3><p>Insurance Tools Portal for quoting and carrier resources.</p><span class="card-tag">Portal</span></a>
+    <a class="card" data-card-id="lapro" data-color="green" href="https://www.leadadvantagepro.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>LaPro</h3><p>Lead Advantage Pro for lead management and dialing.</p><span class="card-tag">Leads</span></a>
+    <a class="card" data-card-id="my-sms" data-color="teal" href="https://my.seniormarketsales.com/my-dashboard" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💬</div><h3>MY SMS</h3><p>Senior Market Sales dashboard and resources.</p><span class="card-tag">SMS</span></a>
+    <a class="card" data-card-id="nipr" data-color="gold" href="https://nipr.com/licensing-center" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📋</div><h3>NIPR</h3><p>National Insurance Producer Registry — licensing center.</p><span class="card-tag">Licensing</span></a>
+    <a class="card" data-card-id="ahip" data-color="purple" href="https://www.ahipmedicaretraining.com/page/login" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🏥</div><h3>AHIP</h3><p>Medicare training and certification portal.</p><span class="card-tag">Training</span></a>
+  `);
+
+  setHTML('section#libraries .section-head .sh-left div:last-child', '<h2>Agent Libraries</h2><p>Searchable knowledge tools for quick reference</p>');
+  setText('section#libraries .count-chip', '3 libraries');
+  setHTML('#grid-libraries', `
+    <a class="card" data-card-id="acronyms" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/acronyms-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📚</div><h3>Insurance Acronyms</h3><p>Quick lookup for Medicare, life, annuity, and group insurance terminology.</p><span class="card-tag">Reference</span></a>
+    <a class="card" data-card-id="hook-library" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/hook-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎣</div><h3>Content Hook Library</h3><p>Copy-paste hooks for Medicare, life, annuity, retirement, and insurance content.</p><span class="card-tag">Content</span></a>
+    <a class="card" data-card-id="one-liners" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/sales-one-liners/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚡</div><h3>Sales One-Liners</h3><p>Catchy, practical one-liners organized by call stage and sales situation.</p><span class="card-tag">Calls</span></a>
+  `);
+
+  const assistantLeft = document.querySelector('#operations-ai .ops-left');
+  if (assistantLeft) assistantLeft.innerHTML = `
+    <h2>Agent<br><span>Assistant</span></h2>
+    <p>Use the Agent Assistant GPT for help with Excel macros, AgencyBloc workflows, onboarding, reporting, underwriting assistance, carrier-specific questions, and internal operations support.</p>
+    <div class="ops-actions">
+      <a class="ops-btn primary" href="https://chatgpt.com/g/g-69b055fe86648191a5d8c5f255df0558-agent-assistant" target="_blank" rel="noopener noreferrer">Open Agent Assistant ↗</a>
+      <a class="ops-btn ghost" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer">Open AgencyBloc</a>
+      <button class="ops-btn ghost" onclick="copyPrompt()">Copy Starter Prompt</button>
+    </div>`;
+
+  const chatIntro = document.querySelector('.chat-bubble');
+  if (chatIntro) chatIntro.innerHTML = `<p>Hey! I'm <strong>Redi</strong>, your GA Hub Agent Assistant.</p><p>I can help you with Excel macros, underwriting questions, carrier-specific guidance, and more.</p><p>Click below to open a full chat session.</p>`;
+
+  const footerBrand = document.querySelector('.footer-brand');
+  const footerNote = document.querySelector('.footer-note');
+  if (footerBrand) footerBrand.textContent = 'GA Hub';
+  if (footerNote) footerNote.textContent = 'Internal resource center for agent tools, libraries, and planning calculators.';
+});
+</script>
+
+</body></html>');
 w.document.close();
 }
 function openFullBooklet() {
 const w = window.open('', '_blank', 'width=960,height=720');
 if (!w) { showSnuToast('\u26a0 Allow pop-ups to open PDFs.'); return; }
-w.document.write('<html><head><title>2019/2020 Election Period Booklet</title></head><body style="margin:0;height:100vh;"><embed src="' + SEP_FULL_DATA + '" type="application/pdf" width="100%" height="100%"></body></html>');
+w.document.write('<html><head><title>2019/2020 Election Period Booklet</title></head><body style="margin:0;height:100vh;"><embed src="' + SEP_FULL_DATA + '" type="application/pdf" width="100%" height="100%">
+<script id="myMediMirrorPatch">
+document.addEventListener('DOMContentLoaded', function(){
+  function setHTML(sel, html){ const el=document.querySelector(sel); if(el) el.innerHTML=html; }
+  function setText(sel, txt){ const el=document.querySelector(sel); if(el) el.textContent=txt; }
+
+  setHTML('section#agent-tools .section-head .sh-left div:last-child', '<h2>Agent Tools</h2><p>Coaching, marketing, and planning resources</p>');
+  setText('section#agent-tools .count-chip', '7 tools');
+  setHTML('#grid-agent-tools', `
+    <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
+    </a>
+    <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
+    </a>
+    <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
+    </a>
+    <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
+    </a>
+    <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
+    </a>
+    <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
+    </div>
+    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#quick-access" onclick="event.preventDefault(); document.getElementById('quick-access')?.scrollIntoView({behavior:'smooth'});">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧭</div><h3>Ancillary Finder</h3><p>Quick-launch card added to mirror your expected My Medi tool lineup.</p><span class="card-tag">Ancillary</span>
+    </a>
+  `);
+
+  setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
+  setText('section#quick-access .count-chip', '6 portals');
+  setHTML('#grid-quick-access', `
+    <a class="card" data-card-id="agencybloc" data-color="rose" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🗂️</div><h3>AgencyBloc</h3><p>Jump straight into your CRM, pipeline, and activity management dashboard.</p><span class="card-tag">CRM</span></a>
+    <a class="card" data-card-id="csg" data-color="blue" href="https://www.insurancetoolsportal.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧰</div><h3>CSG</h3><p>Insurance Tools Portal for quoting and carrier resources.</p><span class="card-tag">Portal</span></a>
+    <a class="card" data-card-id="lapro" data-color="green" href="https://www.leadadvantagepro.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>LaPro</h3><p>Lead Advantage Pro for lead management and dialing.</p><span class="card-tag">Leads</span></a>
+    <a class="card" data-card-id="my-sms" data-color="teal" href="https://my.seniormarketsales.com/my-dashboard" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💬</div><h3>MY SMS</h3><p>Senior Market Sales dashboard and resources.</p><span class="card-tag">SMS</span></a>
+    <a class="card" data-card-id="nipr" data-color="gold" href="https://nipr.com/licensing-center" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📋</div><h3>NIPR</h3><p>National Insurance Producer Registry — licensing center.</p><span class="card-tag">Licensing</span></a>
+    <a class="card" data-card-id="ahip" data-color="purple" href="https://www.ahipmedicaretraining.com/page/login" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🏥</div><h3>AHIP</h3><p>Medicare training and certification portal.</p><span class="card-tag">Training</span></a>
+  `);
+
+  setHTML('section#libraries .section-head .sh-left div:last-child', '<h2>Agent Libraries</h2><p>Searchable knowledge tools for quick reference</p>');
+  setText('section#libraries .count-chip', '3 libraries');
+  setHTML('#grid-libraries', `
+    <a class="card" data-card-id="acronyms" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/acronyms-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📚</div><h3>Insurance Acronyms</h3><p>Quick lookup for Medicare, life, annuity, and group insurance terminology.</p><span class="card-tag">Reference</span></a>
+    <a class="card" data-card-id="hook-library" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/hook-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎣</div><h3>Content Hook Library</h3><p>Copy-paste hooks for Medicare, life, annuity, retirement, and insurance content.</p><span class="card-tag">Content</span></a>
+    <a class="card" data-card-id="one-liners" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/sales-one-liners/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚡</div><h3>Sales One-Liners</h3><p>Catchy, practical one-liners organized by call stage and sales situation.</p><span class="card-tag">Calls</span></a>
+  `);
+
+  const assistantLeft = document.querySelector('#operations-ai .ops-left');
+  if (assistantLeft) assistantLeft.innerHTML = `
+    <h2>Agent<br><span>Assistant</span></h2>
+    <p>Use the Agent Assistant GPT for help with Excel macros, AgencyBloc workflows, onboarding, reporting, underwriting assistance, carrier-specific questions, and internal operations support.</p>
+    <div class="ops-actions">
+      <a class="ops-btn primary" href="https://chatgpt.com/g/g-69b055fe86648191a5d8c5f255df0558-agent-assistant" target="_blank" rel="noopener noreferrer">Open Agent Assistant ↗</a>
+      <a class="ops-btn ghost" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer">Open AgencyBloc</a>
+      <button class="ops-btn ghost" onclick="copyPrompt()">Copy Starter Prompt</button>
+    </div>`;
+
+  const chatIntro = document.querySelector('.chat-bubble');
+  if (chatIntro) chatIntro.innerHTML = `<p>Hey! I'm <strong>Redi</strong>, your GA Hub Agent Assistant.</p><p>I can help you with Excel macros, underwriting questions, carrier-specific guidance, and more.</p><p>Click below to open a full chat session.</p>`;
+
+  const footerBrand = document.querySelector('.footer-brand');
+  const footerNote = document.querySelector('.footer-note');
+  if (footerBrand) footerBrand.textContent = 'GA Hub';
+  if (footerNote) footerNote.textContent = 'Internal resource center for agent tools, libraries, and planning calculators.';
+});
+</script>
+
+</body></html>');
 w.document.close();
 }
 function openSepModal() {
@@ -10659,7 +10943,78 @@ h1{font-size:18px;font-weight:800;margin-bottom:20px;}
 .title{font-weight:700;font-size:14px;margin-bottom:4px;}
 .tag{display:inline-block;background:#e8f0fe;color:#1a2340;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;margin-bottom:6px;}
 @page{margin:.75in}</style></head>
-<body><h1>📰 Medicare Updates</h1>${el.innerHTML}</body></html>`);
+<body><h1>📰 Medicare Updates</h1>${el.innerHTML}
+<script id="myMediMirrorPatch">
+document.addEventListener('DOMContentLoaded', function(){
+  function setHTML(sel, html){ const el=document.querySelector(sel); if(el) el.innerHTML=html; }
+  function setText(sel, txt){ const el=document.querySelector(sel); if(el) el.textContent=txt; }
+
+  setHTML('section#agent-tools .section-head .sh-left div:last-child', '<h2>Agent Tools</h2><p>Coaching, marketing, and planning resources</p>');
+  setText('section#agent-tools .count-chip', '7 tools');
+  setHTML('#grid-agent-tools', `
+    <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
+    </a>
+    <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
+    </a>
+    <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
+    </a>
+    <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
+    </a>
+    <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
+    </a>
+    <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
+    </div>
+    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#quick-access" onclick="event.preventDefault(); document.getElementById('quick-access')?.scrollIntoView({behavior:'smooth'});">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧭</div><h3>Ancillary Finder</h3><p>Quick-launch card added to mirror your expected My Medi tool lineup.</p><span class="card-tag">Ancillary</span>
+    </a>
+  `);
+
+  setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
+  setText('section#quick-access .count-chip', '6 portals');
+  setHTML('#grid-quick-access', `
+    <a class="card" data-card-id="agencybloc" data-color="rose" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🗂️</div><h3>AgencyBloc</h3><p>Jump straight into your CRM, pipeline, and activity management dashboard.</p><span class="card-tag">CRM</span></a>
+    <a class="card" data-card-id="csg" data-color="blue" href="https://www.insurancetoolsportal.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧰</div><h3>CSG</h3><p>Insurance Tools Portal for quoting and carrier resources.</p><span class="card-tag">Portal</span></a>
+    <a class="card" data-card-id="lapro" data-color="green" href="https://www.leadadvantagepro.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>LaPro</h3><p>Lead Advantage Pro for lead management and dialing.</p><span class="card-tag">Leads</span></a>
+    <a class="card" data-card-id="my-sms" data-color="teal" href="https://my.seniormarketsales.com/my-dashboard" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💬</div><h3>MY SMS</h3><p>Senior Market Sales dashboard and resources.</p><span class="card-tag">SMS</span></a>
+    <a class="card" data-card-id="nipr" data-color="gold" href="https://nipr.com/licensing-center" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📋</div><h3>NIPR</h3><p>National Insurance Producer Registry — licensing center.</p><span class="card-tag">Licensing</span></a>
+    <a class="card" data-card-id="ahip" data-color="purple" href="https://www.ahipmedicaretraining.com/page/login" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🏥</div><h3>AHIP</h3><p>Medicare training and certification portal.</p><span class="card-tag">Training</span></a>
+  `);
+
+  setHTML('section#libraries .section-head .sh-left div:last-child', '<h2>Agent Libraries</h2><p>Searchable knowledge tools for quick reference</p>');
+  setText('section#libraries .count-chip', '3 libraries');
+  setHTML('#grid-libraries', `
+    <a class="card" data-card-id="acronyms" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/acronyms-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📚</div><h3>Insurance Acronyms</h3><p>Quick lookup for Medicare, life, annuity, and group insurance terminology.</p><span class="card-tag">Reference</span></a>
+    <a class="card" data-card-id="hook-library" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/hook-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎣</div><h3>Content Hook Library</h3><p>Copy-paste hooks for Medicare, life, annuity, retirement, and insurance content.</p><span class="card-tag">Content</span></a>
+    <a class="card" data-card-id="one-liners" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/sales-one-liners/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚡</div><h3>Sales One-Liners</h3><p>Catchy, practical one-liners organized by call stage and sales situation.</p><span class="card-tag">Calls</span></a>
+  `);
+
+  const assistantLeft = document.querySelector('#operations-ai .ops-left');
+  if (assistantLeft) assistantLeft.innerHTML = `
+    <h2>Agent<br><span>Assistant</span></h2>
+    <p>Use the Agent Assistant GPT for help with Excel macros, AgencyBloc workflows, onboarding, reporting, underwriting assistance, carrier-specific questions, and internal operations support.</p>
+    <div class="ops-actions">
+      <a class="ops-btn primary" href="https://chatgpt.com/g/g-69b055fe86648191a5d8c5f255df0558-agent-assistant" target="_blank" rel="noopener noreferrer">Open Agent Assistant ↗</a>
+      <a class="ops-btn ghost" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer">Open AgencyBloc</a>
+      <button class="ops-btn ghost" onclick="copyPrompt()">Copy Starter Prompt</button>
+    </div>`;
+
+  const chatIntro = document.querySelector('.chat-bubble');
+  if (chatIntro) chatIntro.innerHTML = `<p>Hey! I'm <strong>Redi</strong>, your GA Hub Agent Assistant.</p><p>I can help you with Excel macros, underwriting questions, carrier-specific guidance, and more.</p><p>Click below to open a full chat session.</p>`;
+
+  const footerBrand = document.querySelector('.footer-brand');
+  const footerNote = document.querySelector('.footer-note');
+  if (footerBrand) footerBrand.textContent = 'GA Hub';
+  if (footerNote) footerNote.textContent = 'Internal resource center for agent tools, libraries, and planning calculators.';
+});
+</script>
+
+</body></html>`);
 w.document.close(); w.focus(); setTimeout(()=>w.print(),400);
 }
 function loadMedUpdates() {
@@ -11344,7 +11699,78 @@ w.document.write(`<!DOCTYPE html><html><head><title>Office Alliance Program</tit
 body { font-family: Georgia, serif; color: #1a1a2e; margin: 0; padding: 0; font-size: 13px; }
 * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 </style>
-</head><body>${body.innerHTML}</body></html>`);
+</head><body>${body.innerHTML}
+<script id="myMediMirrorPatch">
+document.addEventListener('DOMContentLoaded', function(){
+  function setHTML(sel, html){ const el=document.querySelector(sel); if(el) el.innerHTML=html; }
+  function setText(sel, txt){ const el=document.querySelector(sel); if(el) el.textContent=txt; }
+
+  setHTML('section#agent-tools .section-head .sh-left div:last-child', '<h2>Agent Tools</h2><p>Coaching, marketing, and planning resources</p>');
+  setText('section#agent-tools .count-chip', '7 tools');
+  setHTML('#grid-agent-tools', `
+    <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
+    </a>
+    <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
+    </a>
+    <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
+    </a>
+    <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
+    </a>
+    <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
+    </a>
+    <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
+    </div>
+    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#quick-access" onclick="event.preventDefault(); document.getElementById('quick-access')?.scrollIntoView({behavior:'smooth'});">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧭</div><h3>Ancillary Finder</h3><p>Quick-launch card added to mirror your expected My Medi tool lineup.</p><span class="card-tag">Ancillary</span>
+    </a>
+  `);
+
+  setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
+  setText('section#quick-access .count-chip', '6 portals');
+  setHTML('#grid-quick-access', `
+    <a class="card" data-card-id="agencybloc" data-color="rose" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🗂️</div><h3>AgencyBloc</h3><p>Jump straight into your CRM, pipeline, and activity management dashboard.</p><span class="card-tag">CRM</span></a>
+    <a class="card" data-card-id="csg" data-color="blue" href="https://www.insurancetoolsportal.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧰</div><h3>CSG</h3><p>Insurance Tools Portal for quoting and carrier resources.</p><span class="card-tag">Portal</span></a>
+    <a class="card" data-card-id="lapro" data-color="green" href="https://www.leadadvantagepro.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>LaPro</h3><p>Lead Advantage Pro for lead management and dialing.</p><span class="card-tag">Leads</span></a>
+    <a class="card" data-card-id="my-sms" data-color="teal" href="https://my.seniormarketsales.com/my-dashboard" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💬</div><h3>MY SMS</h3><p>Senior Market Sales dashboard and resources.</p><span class="card-tag">SMS</span></a>
+    <a class="card" data-card-id="nipr" data-color="gold" href="https://nipr.com/licensing-center" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📋</div><h3>NIPR</h3><p>National Insurance Producer Registry — licensing center.</p><span class="card-tag">Licensing</span></a>
+    <a class="card" data-card-id="ahip" data-color="purple" href="https://www.ahipmedicaretraining.com/page/login" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🏥</div><h3>AHIP</h3><p>Medicare training and certification portal.</p><span class="card-tag">Training</span></a>
+  `);
+
+  setHTML('section#libraries .section-head .sh-left div:last-child', '<h2>Agent Libraries</h2><p>Searchable knowledge tools for quick reference</p>');
+  setText('section#libraries .count-chip', '3 libraries');
+  setHTML('#grid-libraries', `
+    <a class="card" data-card-id="acronyms" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/acronyms-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📚</div><h3>Insurance Acronyms</h3><p>Quick lookup for Medicare, life, annuity, and group insurance terminology.</p><span class="card-tag">Reference</span></a>
+    <a class="card" data-card-id="hook-library" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/hook-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎣</div><h3>Content Hook Library</h3><p>Copy-paste hooks for Medicare, life, annuity, retirement, and insurance content.</p><span class="card-tag">Content</span></a>
+    <a class="card" data-card-id="one-liners" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/sales-one-liners/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚡</div><h3>Sales One-Liners</h3><p>Catchy, practical one-liners organized by call stage and sales situation.</p><span class="card-tag">Calls</span></a>
+  `);
+
+  const assistantLeft = document.querySelector('#operations-ai .ops-left');
+  if (assistantLeft) assistantLeft.innerHTML = `
+    <h2>Agent<br><span>Assistant</span></h2>
+    <p>Use the Agent Assistant GPT for help with Excel macros, AgencyBloc workflows, onboarding, reporting, underwriting assistance, carrier-specific questions, and internal operations support.</p>
+    <div class="ops-actions">
+      <a class="ops-btn primary" href="https://chatgpt.com/g/g-69b055fe86648191a5d8c5f255df0558-agent-assistant" target="_blank" rel="noopener noreferrer">Open Agent Assistant ↗</a>
+      <a class="ops-btn ghost" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer">Open AgencyBloc</a>
+      <button class="ops-btn ghost" onclick="copyPrompt()">Copy Starter Prompt</button>
+    </div>`;
+
+  const chatIntro = document.querySelector('.chat-bubble');
+  if (chatIntro) chatIntro.innerHTML = `<p>Hey! I'm <strong>Redi</strong>, your GA Hub Agent Assistant.</p><p>I can help you with Excel macros, underwriting questions, carrier-specific guidance, and more.</p><p>Click below to open a full chat session.</p>`;
+
+  const footerBrand = document.querySelector('.footer-brand');
+  const footerNote = document.querySelector('.footer-note');
+  if (footerBrand) footerBrand.textContent = 'GA Hub';
+  if (footerNote) footerNote.textContent = 'Internal resource center for agent tools, libraries, and planning calculators.';
+});
+</script>
+
+</body></html>`);
 w.document.close();
 w.focus();
 setTimeout(() => { w.print(); }, 400);
@@ -11679,7 +12105,78 @@ border-radius: 16px 16px 0 0 !important;
 #countdownStrip { flex-wrap: wrap !important; }
 .admin-modal { width: 95vw !important; }
 }</style>
-</head><body>${body.innerHTML}</body></html>`);
+</head><body>${body.innerHTML}
+<script id="myMediMirrorPatch">
+document.addEventListener('DOMContentLoaded', function(){
+  function setHTML(sel, html){ const el=document.querySelector(sel); if(el) el.innerHTML=html; }
+  function setText(sel, txt){ const el=document.querySelector(sel); if(el) el.textContent=txt; }
+
+  setHTML('section#agent-tools .section-head .sh-left div:last-child', '<h2>Agent Tools</h2><p>Coaching, marketing, and planning resources</p>');
+  setText('section#agent-tools .count-chip', '7 tools');
+  setHTML('#grid-agent-tools', `
+    <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
+    </a>
+    <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
+    </a>
+    <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
+    </a>
+    <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
+    </a>
+    <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
+    </a>
+    <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
+    </div>
+    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#quick-access" onclick="event.preventDefault(); document.getElementById('quick-access')?.scrollIntoView({behavior:'smooth'});">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧭</div><h3>Ancillary Finder</h3><p>Quick-launch card added to mirror your expected My Medi tool lineup.</p><span class="card-tag">Ancillary</span>
+    </a>
+  `);
+
+  setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
+  setText('section#quick-access .count-chip', '6 portals');
+  setHTML('#grid-quick-access', `
+    <a class="card" data-card-id="agencybloc" data-color="rose" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🗂️</div><h3>AgencyBloc</h3><p>Jump straight into your CRM, pipeline, and activity management dashboard.</p><span class="card-tag">CRM</span></a>
+    <a class="card" data-card-id="csg" data-color="blue" href="https://www.insurancetoolsportal.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧰</div><h3>CSG</h3><p>Insurance Tools Portal for quoting and carrier resources.</p><span class="card-tag">Portal</span></a>
+    <a class="card" data-card-id="lapro" data-color="green" href="https://www.leadadvantagepro.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>LaPro</h3><p>Lead Advantage Pro for lead management and dialing.</p><span class="card-tag">Leads</span></a>
+    <a class="card" data-card-id="my-sms" data-color="teal" href="https://my.seniormarketsales.com/my-dashboard" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💬</div><h3>MY SMS</h3><p>Senior Market Sales dashboard and resources.</p><span class="card-tag">SMS</span></a>
+    <a class="card" data-card-id="nipr" data-color="gold" href="https://nipr.com/licensing-center" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📋</div><h3>NIPR</h3><p>National Insurance Producer Registry — licensing center.</p><span class="card-tag">Licensing</span></a>
+    <a class="card" data-card-id="ahip" data-color="purple" href="https://www.ahipmedicaretraining.com/page/login" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🏥</div><h3>AHIP</h3><p>Medicare training and certification portal.</p><span class="card-tag">Training</span></a>
+  `);
+
+  setHTML('section#libraries .section-head .sh-left div:last-child', '<h2>Agent Libraries</h2><p>Searchable knowledge tools for quick reference</p>');
+  setText('section#libraries .count-chip', '3 libraries');
+  setHTML('#grid-libraries', `
+    <a class="card" data-card-id="acronyms" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/acronyms-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📚</div><h3>Insurance Acronyms</h3><p>Quick lookup for Medicare, life, annuity, and group insurance terminology.</p><span class="card-tag">Reference</span></a>
+    <a class="card" data-card-id="hook-library" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/hook-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎣</div><h3>Content Hook Library</h3><p>Copy-paste hooks for Medicare, life, annuity, retirement, and insurance content.</p><span class="card-tag">Content</span></a>
+    <a class="card" data-card-id="one-liners" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/sales-one-liners/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚡</div><h3>Sales One-Liners</h3><p>Catchy, practical one-liners organized by call stage and sales situation.</p><span class="card-tag">Calls</span></a>
+  `);
+
+  const assistantLeft = document.querySelector('#operations-ai .ops-left');
+  if (assistantLeft) assistantLeft.innerHTML = `
+    <h2>Agent<br><span>Assistant</span></h2>
+    <p>Use the Agent Assistant GPT for help with Excel macros, AgencyBloc workflows, onboarding, reporting, underwriting assistance, carrier-specific questions, and internal operations support.</p>
+    <div class="ops-actions">
+      <a class="ops-btn primary" href="https://chatgpt.com/g/g-69b055fe86648191a5d8c5f255df0558-agent-assistant" target="_blank" rel="noopener noreferrer">Open Agent Assistant ↗</a>
+      <a class="ops-btn ghost" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer">Open AgencyBloc</a>
+      <button class="ops-btn ghost" onclick="copyPrompt()">Copy Starter Prompt</button>
+    </div>`;
+
+  const chatIntro = document.querySelector('.chat-bubble');
+  if (chatIntro) chatIntro.innerHTML = `<p>Hey! I'm <strong>Redi</strong>, your GA Hub Agent Assistant.</p><p>I can help you with Excel macros, underwriting questions, carrier-specific guidance, and more.</p><p>Click below to open a full chat session.</p>`;
+
+  const footerBrand = document.querySelector('.footer-brand');
+  const footerNote = document.querySelector('.footer-note');
+  if (footerBrand) footerBrand.textContent = 'GA Hub';
+  if (footerNote) footerNote.textContent = 'Internal resource center for agent tools, libraries, and planning calculators.';
+});
+</script>
+
+</body></html>`);
 w.document.close();
 w.focus();
 setTimeout(() => { w.print(); }, 400);
@@ -13755,5 +14252,76 @@ if (coach) { trackEvent('practice_tab', 'Sales Coach Launch'); return; }
 console.log('[Medi Hub Tracking] Active · session:', _sid);
 })();
 </script>
+
+<script id="myMediMirrorPatch">
+document.addEventListener('DOMContentLoaded', function(){
+  function setHTML(sel, html){ const el=document.querySelector(sel); if(el) el.innerHTML=html; }
+  function setText(sel, txt){ const el=document.querySelector(sel); if(el) el.textContent=txt; }
+
+  setHTML('section#agent-tools .section-head .sh-left div:last-child', '<h2>Agent Tools</h2><p>Coaching, marketing, and planning resources</p>');
+  setText('section#agent-tools .count-chip', '7 tools');
+  setHTML('#grid-agent-tools', `
+    <a class="card" data-card-id="sales-coach" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/sales-coach.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>Sales Coach</h3><p>Practice objections, sharpen scripts, and improve call flow with AI-powered coaching.</p><span class="card-tag">Coaching</span>
+    </a>
+    <a class="card" data-card-id="content-engine" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/ai-suite/content-engine.html">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">✍️</div><h3>Content Engine</h3><p>Create marketing content for social media, follow-ups, and outreach campaigns.</p><span class="card-tag">Marketing</span>
+    </a>
+    <a class="card" data-card-id="coverage-comparison" data-color="purple" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/comparison/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚖️</div><h3>Coverage Comparison</h3><p>Compare Medicare against employer or workplace coverage options side by side.</p><span class="card-tag">Comparison</span>
+    </a>
+    <a class="card" data-card-id="retirement-budget" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/retirement-budget/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💰</div><h3>Retirement Budget</h3><p>Help clients estimate retirement income and expenses with clarity.</p><span class="card-tag">Planning</span>
+    </a>
+    <a class="card" data-card-id="bundle-options" data-color="green" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/bundle-options/">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📦</div><h3>Bundle Options Tool</h3><p>Create bundled coverage scenarios and review option groupings for clients.</p><span class="card-tag">Quoting</span>
+    </a>
+    <div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">❤️</div><h3>Life Insurance Calculator</h3><p>Estimate coverage needs for debts, income replacement, children, weddings, properties, and final expenses.</p><span class="card-tag">Protection</span>
+    </div>
+    <a class="card" data-card-id="ancillary-finder" data-color="blue" href="#quick-access" onclick="event.preventDefault(); document.getElementById('quick-access')?.scrollIntoView({behavior:'smooth'});">
+      <span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧭</div><h3>Ancillary Finder</h3><p>Quick-launch card added to mirror your expected My Medi tool lineup.</p><span class="card-tag">Ancillary</span>
+    </a>
+  `);
+
+  setHTML('section#quick-access .section-head .sh-left div:last-child', '<h2>Quick Access</h2><p>Direct links to your key portals and platforms</p>');
+  setText('section#quick-access .count-chip', '6 portals');
+  setHTML('#grid-quick-access', `
+    <a class="card" data-card-id="agencybloc" data-color="rose" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🗂️</div><h3>AgencyBloc</h3><p>Jump straight into your CRM, pipeline, and activity management dashboard.</p><span class="card-tag">CRM</span></a>
+    <a class="card" data-card-id="csg" data-color="blue" href="https://www.insurancetoolsportal.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🧰</div><h3>CSG</h3><p>Insurance Tools Portal for quoting and carrier resources.</p><span class="card-tag">Portal</span></a>
+    <a class="card" data-card-id="lapro" data-color="green" href="https://www.leadadvantagepro.com/" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎯</div><h3>LaPro</h3><p>Lead Advantage Pro for lead management and dialing.</p><span class="card-tag">Leads</span></a>
+    <a class="card" data-card-id="my-sms" data-color="teal" href="https://my.seniormarketsales.com/my-dashboard" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">💬</div><h3>MY SMS</h3><p>Senior Market Sales dashboard and resources.</p><span class="card-tag">SMS</span></a>
+    <a class="card" data-card-id="nipr" data-color="gold" href="https://nipr.com/licensing-center" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📋</div><h3>NIPR</h3><p>National Insurance Producer Registry — licensing center.</p><span class="card-tag">Licensing</span></a>
+    <a class="card" data-card-id="ahip" data-color="purple" href="https://www.ahipmedicaretraining.com/page/login" target="_blank" rel="noopener noreferrer"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🏥</div><h3>AHIP</h3><p>Medicare training and certification portal.</p><span class="card-tag">Training</span></a>
+  `);
+
+  setHTML('section#libraries .section-head .sh-left div:last-child', '<h2>Agent Libraries</h2><p>Searchable knowledge tools for quick reference</p>');
+  setText('section#libraries .count-chip', '3 libraries');
+  setHTML('#grid-libraries', `
+    <a class="card" data-card-id="acronyms" data-color="blue" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/acronyms-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">📚</div><h3>Insurance Acronyms</h3><p>Quick lookup for Medicare, life, annuity, and group insurance terminology.</p><span class="card-tag">Reference</span></a>
+    <a class="card" data-card-id="hook-library" data-color="teal" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/hook-library/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🎣</div><h3>Content Hook Library</h3><p>Copy-paste hooks for Medicare, life, annuity, retirement, and insurance content.</p><span class="card-tag">Content</span></a>
+    <a class="card" data-card-id="one-liners" data-color="gold" href="https://brdeross.github.io/medi-solutions-agent-hub/tools/sales-one-liners/"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">⚡</div><h3>Sales One-Liners</h3><p>Catchy, practical one-liners organized by call stage and sales situation.</p><span class="card-tag">Calls</span></a>
+  `);
+
+  const assistantLeft = document.querySelector('#operations-ai .ops-left');
+  if (assistantLeft) assistantLeft.innerHTML = `
+    <h2>Agent<br><span>Assistant</span></h2>
+    <p>Use the Agent Assistant GPT for help with Excel macros, AgencyBloc workflows, onboarding, reporting, underwriting assistance, carrier-specific questions, and internal operations support.</p>
+    <div class="ops-actions">
+      <a class="ops-btn primary" href="https://chatgpt.com/g/g-69b055fe86648191a5d8c5f255df0558-agent-assistant" target="_blank" rel="noopener noreferrer">Open Agent Assistant ↗</a>
+      <a class="ops-btn ghost" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer">Open AgencyBloc</a>
+      <button class="ops-btn ghost" onclick="copyPrompt()">Copy Starter Prompt</button>
+    </div>`;
+
+  const chatIntro = document.querySelector('.chat-bubble');
+  if (chatIntro) chatIntro.innerHTML = `<p>Hey! I'm <strong>Redi</strong>, your GA Hub Agent Assistant.</p><p>I can help you with Excel macros, underwriting questions, carrier-specific guidance, and more.</p><p>Click below to open a full chat session.</p>`;
+
+  const footerBrand = document.querySelector('.footer-brand');
+  const footerNote = document.querySelector('.footer-note');
+  if (footerBrand) footerBrand.textContent = 'GA Hub';
+  if (footerNote) footerNote.textContent = 'Internal resource center for agent tools, libraries, and planning calculators.';
+});
+</script>
+
 </body>
 </html>
