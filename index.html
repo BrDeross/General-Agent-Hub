@@ -4016,17 +4016,14 @@ cursor: pointer; white-space: nowrap;
 <div class="brand-name">GA Hub</div>
 </div>
 </div>
+
 <nav class="desktop-nav">
 <a href="#agent-tools">Tools</a>
 <a href="#quick-access">Portals</a>
 <a href="#libraries">Libraries</a>
 <a href="#updates">Updates</a>
 <a href="#leaderboard">Leaderboard</a>
-<a href="#video-library">Videos</a>
-<a href="#practice-client">🎯 Practice</a>
-<a href="#trip-tracker">🏝️ Trip</a>
-<a href="#cert-tracker">🎓 Certs</a>
-<a href="#friday-meetings">📅 Meetings</a>
+<a href="#life-calc">Life Calc</a>
 <a href="#operations-ai">Agent AI</a>
 <a class="pill" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer">AgencyBloc ↗</a>
 </nav>
@@ -4078,6 +4075,7 @@ cursor: pointer; white-space: nowrap;
 </div>
 </div>
 <div class="wrap">
+
 <nav class="mobile-nav" id="mobileNav">
 <button onclick="closeNav()" style="align-self:flex-end;background:none;border:1px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-size:18px;padding:8px 14px;cursor:pointer;margin-bottom:8px;">✕</button>
 <a href="#agent-tools" onclick="closeNav()">🛠 Tools</a>
@@ -4085,11 +4083,7 @@ cursor: pointer; white-space: nowrap;
 <a href="#libraries" onclick="closeNav()">📖 Libraries</a>
 <a href="#updates" onclick="closeNav()">📡 Updates</a>
 <a href="#leaderboard" onclick="closeNav()">🏆 Leaderboard</a>
-<a href="#video-library" onclick="closeNav()">🎬 Videos</a>
-<a href="#practice-client" onclick="closeNav()">🎯 Practice</a>
-<a href="#trip-tracker" onclick="closeNav()">🏝️ Trip</a>
-<a href="#cert-tracker" onclick="closeNav()">🎓 Certs</a>
-<a href="#friday-meetings" onclick="closeNav()">📅 Meetings</a>
+<a href="#life-calc" onclick="closeNav()">❤️ Life Calc</a>
 <a href="#operations-ai" onclick="closeNav()">🤖 Agent AI</a>
 <a class="pill" href="https://app.agencybloc.com/" target="_blank" rel="noopener noreferrer">AgencyBloc ↗</a>
 </nav>
@@ -4131,6 +4125,12 @@ document.addEventListener('DOMContentLoaded',syncSpacer);
 Agent Command Center
 </div>
 <h1>Your central hub for<br><em>smarter agent work</em></h1>
+<p style="font-size:15.5px;color:var(--muted);line-height:1.78;max-width:560px;margin:14px 0 20px;">Access tools, searchable libraries, calculators, leaderboard visibility, and operations support — all in one place. Leads and pipeline live in AgencyBloc.</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;">
+<a href="#agent-tools" class="ops-btn ghost" style="width:auto;padding:10px 16px;">6 Core Tools ↓</a>
+<a href="#libraries" class="ops-btn ghost" style="width:auto;padding:10px 16px;">3 Libraries ↓</a>
+<a href="#operations-ai" class="ops-btn ghost" style="width:auto;padding:10px 16px;">Live Agent AI ↓</a>
+</div>
 </div>
 <div class="hero-stats" id="countdownStrip">
 <div class="hstat" style="opacity:.5;pointer-events:none;">
@@ -4163,7 +4163,7 @@ Agent Command Center
 <p>Coaching, marketing, and planning resources</p>
 </div>
 </div>
-<span class="count-chip">13 tools</span>
+<span class="count-chip">6 core tools</span>
 <button class="reorder-btn" onclick="toggleReorder('agent-tools', this)">⠿ Reorder</button>
 </div>
 <!-- Tool Cards -->
@@ -4208,7 +4208,7 @@ Agent Command Center
 <p>Create bundled coverage scenarios and review option groupings for clients.</p>
 <span class="card-tag">Quoting</span>
 </a>
-<div class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
+<div id="life-calc" class="card" data-card-id="life-calc" data-color="rose" style="cursor:pointer;" onclick="openLifeCalcModal()">
 <span class="card-arrow">↗</span>
 <div class="card-shimmer"></div>
 <div class="card-icon-wrap">❤️</div>
@@ -4298,11 +4298,11 @@ Agent Command Center
 <div class="sh-left">
 <div class="sh-icon" style="background:linear-gradient(135deg,rgba(59,130,246,.28),rgba(59,130,246,.08));">🔗</div>
 <div>
-<h2>Quick <span style="color:var(--accent-2)">Access</span></h2>
+<h2>Quick Access</h2>
 <p>Direct links to your key portals and platforms</p>
 </div>
 </div>
-<span class="count-chip">8 portals</span>
+<span class="count-chip">6 portals</span>
 <button class="reorder-btn" onclick="toggleReorder('quick-access', this)">⠿ Reorder</button>
 </div>
 <div class="card-grid" id="grid-quick-access" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
@@ -4385,7 +4385,7 @@ Agent Command Center
 <p>Searchable knowledge tools for quick reference</p>
 </div>
 </div>
-<span class="count-chip">5 libraries</span>
+<span class="count-chip">3 libraries</span>
 <button class="reorder-btn" onclick="toggleReorder('libraries', this)">⠿ Reorder</button>
 </div>
 <div class="card-grid" id="grid-libraries">
@@ -4439,7 +4439,7 @@ Agent Command Center
 <div class="sh-left">
 <div class="sh-icon purple">🎬</div>
 <div>
-<h2>Video <span style="color:var(--accent-2)">Training Library</span></h2>
+<h2>Video Training Library</h2>
 <p>On-demand training videos, product walkthroughs, and coaching sessions</p>
 </div>
 </div>
@@ -6059,7 +6059,7 @@ When answering:
 <div class="footer-brand">GA Hub</div>
 <div class="footer-note">Internal resource center for agent tools, libraries, and planning calculators.</div>
 </div>
-<div style="font-size:11px;color:var(--muted-2);">© 2025 GA Hub</div>
+<div style="font-size:11px;color:var(--muted-2);">© 2026 GA Hub</div>
 </div>
 <div class="footer-disclaimer">
 <p>
