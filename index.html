@@ -17403,11 +17403,27 @@ window.openAncillaryCompare = function(){
 };
 window.closeAncillaryCompare = function(){ document.getElementById('ancillaryCompareOverlay').classList.remove('open'); document.body.style.overflow=''; };
 window.printAncillaryCompare = function(){
-  const content = document.getElementById('ancillaryCompareContent'); if (!content) return;
+  const content = document.getElementById('ancillaryCompareContent');
+  if (!content) return;
   const w = window.open('', '_blank', 'width=1180,height=820');
-  if (!w) { if (typeof showSnuToast === 'function') showSnuToast('⚠ Allow pop-ups to print the compare view.'); return; }
-  w.document.write('<html><head><title>Ancillary Compare</title><style>body{font-family:Arial,sans-serif;padding:24px;color:#111}table{width:100%;border-collapse:collapse}th,td{border:1px solid #d1d5db;padding:10px;vertical-align:top;text-align:left}th{background:#f3f4f6}button{display:none}</style></head><body><h2>Ancillary Compare</h2>' + content.innerHTML + '<script>
-(function(){
+  if (!w) {
+    if (typeof showSnuToast === 'function') showSnuToast('⚠ Allow pop-ups to print the compare view.');
+    return;
+  }
+  const html = '<html><head><title>Ancillary Compare</title><style>' +
+    'body{font-family:Arial,sans-serif;padding:24px;color:#111}' +
+    'table{width:100%;border-collapse:collapse}' +
+    'th,td{border:1px solid #d1d5db;padding:10px;vertical-align:top;text-align:left}' +
+    'th{background:#f3f4f6}' +
+    'button{display:none}' +
+    '</style></head><body><h2>Ancillary Compare</h2>' + content.innerHTML + '</body></html>';
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
+  w.focus();
+  setTimeout(function(){ w.print(); }, 250);
+};
+
 const HUB_SESSION_KEY = 'ga_hub_session';
 function readHubSession() {
 try { return JSON.parse(sessionStorage.getItem(HUB_SESSION_KEY) || 'null'); } catch(e) { return null; }
