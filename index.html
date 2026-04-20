@@ -7112,6 +7112,7 @@ const OWNERSHIP_SECTIONS = [
 let _ownership = [], _ownershipEditId = null;
 let _ownershipSyncStarted = false;
 let _ownershipSnapshot = '[]';
+const OWNERSHIP_LOCAL_KEY = 'ga_section_ownership_local';
 function ownershipSnapshot(items) {
 return JSON.stringify((items || []).map(x => ({
 id: String(x.id || ''),
@@ -7121,6 +7122,14 @@ sections: Array.isArray(x.sections) ? [...x.sections].sort() : []
 })).sort((a,b) => String(a.id).localeCompare(String(b.id))));
 }
 async function readOwnershipShared() {
+try {
+const localRaw = localStorage.getItem(OWNERSHIP_LOCAL_KEY);
+const localParsed = localRaw ? JSON.parse(localRaw) : [];
+if (Array.isArray(localParsed) && localParsed.length && !_ownership.length) {
+_ownership = localParsed;
+_ownershipSnapshot = ownershipSnapshot(localParsed);
+}
+} catch(e) {}
 if (typeof jbReadBin === 'function' && typeof JB_MAIN_BIN !== 'undefined') {
 const rec = await jbReadBin(JB_MAIN_BIN);
 const data = rec && rec.section_ownership;
@@ -7128,16 +7137,20 @@ if (Array.isArray(data)) return data;
 if (typeof data === 'string') {
 try { return JSON.parse(data) || []; } catch(e) { return []; }
 }
-return [];
 }
 const rows = await supaGet('section_ownership');
 if (rows && rows.length && rows[0].data) {
 const raw = rows[0].data;
 return Array.isArray(raw) ? raw : (typeof raw === 'string' ? JSON.parse(raw) : []);
 }
-return [];
+try {
+const fallbackRaw = localStorage.getItem(OWNERSHIP_LOCAL_KEY);
+const fallback = fallbackRaw ? JSON.parse(fallbackRaw) : [];
+return Array.isArray(fallback) ? fallback : [];
+} catch(e) { return []; }
 }
 async function writeOwnershipShared(items) {
+try { localStorage.setItem(OWNERSHIP_LOCAL_KEY, JSON.stringify(items || [])); } catch(e) {}
 if (typeof jbReadBin === 'function' && typeof jbWriteBin === 'function' && typeof JB_MAIN_BIN !== 'undefined') {
 const rec = await jbReadBin(JB_MAIN_BIN) || {};
 rec.section_ownership = items;
@@ -7248,6 +7261,8 @@ if (statusEl) statusEl.textContent = 'Editing ownership entry…';
 };
 window.deleteOwnershipEntry = function(id) {
 _ownership = _ownership.filter(x => String(x.id) !== String(id));
+_ownershipSnapshot = ownershipSnapshot(_ownership);
+try { localStorage.setItem(OWNERSHIP_LOCAL_KEY, JSON.stringify(_ownership)); } catch(e) {}
 renderOwnershipAdminList();
 writeOwnershipShared(_ownership)
 .then(() => {
@@ -7290,6 +7305,8 @@ _ownership = _ownership.map(x => String(x.id) === String(_ownershipEditId) ? ent
 } else {
 _ownership.push(entry);
 }
+_ownershipSnapshot = ownershipSnapshot(_ownership);
+try { localStorage.setItem(OWNERSHIP_LOCAL_KEY, JSON.stringify(_ownership)); } catch(e) {}
 renderOwnershipAdminList();
 if (statusEl) statusEl.textContent = '⏳ Saving ownership sign-up…';
 writeOwnershipShared(_ownership)
@@ -8055,6 +8072,9 @@ const panel = document.getElementById('adminTab' + name.charAt(0).toUpperCase() 
 if (panel) panel.classList.add('active');
 if (name === 'ownership' && typeof initOwnership === 'function') initOwnership(true);
 }
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof initOwnership === 'function') initOwnership(false);
+});
 // ── Photo upload handler ──────────────────────────────────────────────────
 let _spotlightPhotoBase64 = null;
 function handleSpotlightPhoto(file) {
