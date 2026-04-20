@@ -4163,7 +4163,7 @@ Agent Command Center
 <p>Coaching, marketing, and planning resources</p>
 </div>
 </div>
-<span class="count-chip">13 tools</span>
+<span class="count-chip">14 tools</span>
 <button class="reorder-btn" onclick="toggleReorder('agent-tools', this)">⠿ Reorder</button>
 </div>
 <!-- Tool Cards -->
@@ -4289,6 +4289,8 @@ Agent Command Center
 <span class="card-tag">Onboarding</span>
 </div>
 </div>
+
+<a class="card" data-card-id="ancillary-finder" data-color="green" href="#" onclick="event.preventDefault(); openAncillaryFinder();" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ' ){event.preventDefault();openAncillaryFinder();}"><span class="card-arrow">↗</span><div class="card-shimmer"></div><div class="card-icon-wrap">🩺</div><h3>Ancillary Finder</h3><p>Search all ancillary files added in admin and compare options in one place.</p><span class="card-tag">Ancillary</span></a>
 </div>
 </section>
 <!-- QUICK ACCESS PORTALS -->
@@ -4848,6 +4850,7 @@ style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;backgro
 <button class="admin-tab" onclick="switchAdminTab('carriers',this)">📞 Carriers</button>
 <button class="admin-tab" onclick="switchAdminTab('onboarding',this)">🚀 Onboarding</button>
 <button class="admin-tab" onclick="switchAdminTab('ownership',this)">📝 Ownership</button>
+<button class="admin-tab" onclick="switchAdminTab('ancillary',this)">🩺 Ancillary</button>
 <button class="admin-tab active" onclick="switchAdminTab('snu',this)">🏆 SNU Data</button>
 <button class="admin-tab" onclick="switchAdminTab('spotlight',this)">⭐ Agent Spotlight</button>
 <button class="admin-tab" onclick="switchAdminTab('aom',this)">🗓️ Agent of Month</button>
@@ -5389,6 +5392,63 @@ style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;backgro
 <p style="font-size:11px;color:var(--muted-2);margin-bottom:10px;">Drag to reorder.</p>
 <div id="medUpdAdminList"></div>
 </div>
+</div>
+</div><div class="admin-tab-panel" id="adminTabAncillary">
+<div class="admin-body">
+<div class="admin-section-title">🩺 Ancillary Carrier Finder</div>
+<p style="font-size:12px;color:var(--muted-2);margin-bottom:14px;">Build a shared ancillary library for agents. Bulk import will replace the current library and publish globally. Manual entries save globally as soon as you add or update them.</p>
+<div class="csv-drop-zone" id="ancillaryCsvDrop" onclick="document.getElementById('ancillaryCsvInput').click()" style="margin-bottom:10px;">
+<div class="csv-drop-icon">📂</div>
+<div class="csv-drop-text">Drop CSV or Excel here, or <span>click to browse</span></div>
+<div class="csv-drop-hint">Columns: <code>Carrier Name</code>, <code>Category</code>, <code>Product Name</code>, <code>States</code>, <code>Riders</code>, <code>Brochure URL</code>, <code>State Chart URL</code>, <code>Quote / Enroll URL</code> (or <code>EApp URL</code>), <code>Portal URL</code>, <code>Support Phone</code>, <code>Notes</code>, <code>Active</code>, <code>Sort Order</code></div>
+<input accept=".csv,.xlsx,.xls" id="ancillaryCsvInput" onchange="handleAncillaryCsvFile(this.files[0])" style="display:none" type="file"/>
+</div>
+<div class="csv-status" id="ancillaryCsvStatus"></div>
+<div style="display:grid;gap:10px;margin:18px 0 14px;">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+<div><label style="font-size:10px;color:var(--muted-2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;">Carrier Name *</label><input class="admin-input" id="ancCarrierName" placeholder="Aetna" type="text"/></div>
+<div><label style="font-size:10px;color:var(--muted-2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;">Category *</label><input class="admin-input" id="ancCategory" placeholder="Cancer" type="text"/></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+<div><label style="font-size:10px;color:var(--muted-2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;">Product Name *</label><input class="admin-input" id="ancProductName" placeholder="Cancer Protection Plus" type="text"/></div>
+<div><label style="font-size:10px;color:var(--muted-2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;">States</label><input class="admin-input" id="ancStates" placeholder="NJ, PA, DE" type="text"/></div>
+</div>
+<div><label style="font-size:10px;color:var(--muted-2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;">Riders</label><input class="admin-input" id="ancRiders" placeholder="Return of Premium; Wellness Benefit" type="text"/></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+<div><label style="font-size:10px;color:var(--muted-2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;">Brochure URL</label><input class="admin-input" id="ancBrochureUrl" placeholder="https://…" type="text"/></div>
+<div><label style="font-size:10px;color:var(--muted-2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;">State Chart URL</label><input class="admin-input" id="ancStateChartUrl" placeholder="https://…" type="text"/></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+<div><label style="font-size:10px;color:var(--muted-2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;">Quote / Enroll URL</label><input class="admin-input" id="ancEappUrl" placeholder="https://…" type="text"/></div>
+<div><label style="font-size:10px;color:var(--muted-2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;">Portal URL</label><input class="admin-input" id="ancPortalUrl" placeholder="https://…" type="text"/></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 120px 120px;gap:8px;align-items:end;">
+<div><label style="font-size:10px;color:var(--muted-2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;">Support Phone</label><input class="admin-input" id="ancSupportPhone" placeholder="1-800-000-0000" type="text"/></div>
+<div><label style="font-size:10px;color:var(--muted-2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;">Sort Order</label><input class="admin-input" id="ancSortOrder" placeholder="1" type="number"/></div>
+<div style="padding-bottom:10px;"><label style="display:flex;align-items:center;gap:8px;font-size:12px;color:#fff;font-weight:700;"><input checked="" id="ancActive" style="accent-color:var(--teal);" type="checkbox"/>Active</label></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+<div class="anc-upload-mini" id="ancBrochureZone" onclick="document.getElementById('ancBrochureInput').click()">
+<div class="anc-upload-mini-title">📎 Brochure File (optional)</div>
+<div class="anc-upload-mini-sub" id="ancBrochureFileLabel">Click to upload PDF or image brochure</div>
+<input accept=".pdf,image/*" id="ancBrochureInput" onchange="handleAncillaryAsset(this.files[0],'brochure')" style="display:none" type="file"/>
+</div>
+<div class="anc-upload-mini" id="ancChartZone" onclick="document.getElementById('ancChartInput').click()">
+<div class="anc-upload-mini-title">🗺️ State Chart File (optional)</div>
+<div class="anc-upload-mini-sub" id="ancChartFileLabel">Click to upload PDF or image chart</div>
+<input accept=".pdf,image/*" id="ancChartInput" onchange="handleAncillaryAsset(this.files[0],'chart')" style="display:none" type="file"/>
+</div>
+</div>
+<div><label style="font-size:10px;color:var(--muted-2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;">Notes</label><textarea class="anc-textarea" id="ancNotes" placeholder="Underwriting notes, state quirks, waiting periods, exclusions…" rows="3"></textarea></div>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+<button onclick="submitAncillaryEntry()" style="padding:7px 18px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">💾 Save Entry</button>
+<button id="ancCancelBtn" onclick="cancelAncillaryEdit()" style="display:none;padding:7px 18px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:transparent;color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;cursor:pointer;">Cancel</button>
+<button onclick="clearAncillaryData()" style="padding:7px 18px;border-radius:8px;border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.12);color:#f87171;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">🗑 Clear Library</button>
+</div>
+<div style="font-size:10px;color:var(--muted-2);margin-bottom:12px;">Tip: use hosted URLs for large PDFs. Uploaded brochure/chart files are best for smaller PDFs or images.</div>
+<div class="admin-section-title" style="margin-top:4px;">📋 Current Ancillary Library <span id="ancAdminCount" style="font-weight:400;color:var(--muted-2);font-size:11px;"></span></div>
+<div id="ancAdminList" style="margin-top:8px;"></div>
 </div>
 </div><!-- /adminTabUpdates -->
 <!-- ── Tab: Videos ── -->
@@ -12963,6 +13023,7 @@ const GSEARCH_INDEX = [
 {name:'Submit a Referral',section:'Agent Tools',icon:'📋',action:()=>{ openReferralModal?.(); closeGsearch(); }},
 {name:'Alliance Program',section:'Agent Tools',icon:'🤝',action:()=>{ openAllianceProgramModal?.(); closeGsearch(); }},
 {name:'Group Health Census',section:'Agent Tools',icon:'📋',action:()=>{ openCensusFormModal?.(); closeGsearch(); }},
+{name:'Ancillary Finder',section:'Agent Tools',icon:'🩺',action:()=>{ openAncillaryFinder?.(); closeGsearch(); }},
 // Portals
 {name:'AgencyBloc',section:'Portals',icon:'🗂️',action:()=>window.open('https://app.agencybloc.com/','_blank')},
 {name:'CSG Portal',section:'Portals',icon:'🧰',action:()=>window.open('https://www.insurancetoolsportal.com/','_blank')},
@@ -13624,6 +13685,56 @@ box-shadow: 0 4px 16px rgba(59,130,246,.2);
 0%, 100% { box-shadow: 0 4px 0 #1e40af, 0 8px 24px rgba(59,130,246,.45), 0 0 20px rgba(59,130,246,.3), inset 0 1px 0 rgba(255,255,255,.25); }
 50% { box-shadow: 0 4px 0 #1e40af, 0 8px 24px rgba(59,130,246,.45), 0 0 40px rgba(59,130,246,.55), 0 0 60px rgba(59,130,246,.2), inset 0 1px 0 rgba(255,255,255,.25); }
 }
+.anc-search-input, .anc-select, .anc-textarea {
+  width:100%; box-sizing:border-box; background:rgba(255,255,255,.06); border:1px solid var(--border);
+  border-radius:10px; padding:10px 12px; color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; outline:none;
+}
+.anc-select option { background:#1c2d4a; color:#fff; }
+.anc-compare-bar {
+  display:none; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px; padding:10px 12px;
+  border:1px solid rgba(251,191,36,.25); background:rgba(251,191,36,.08); border-radius:10px;
+}
+.anc-compare-bar.active { display:flex; }
+.anc-result-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
+.anc-card {
+  background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:14px; padding:16px; display:flex; flex-direction:column; gap:10px;
+}
+.anc-card.compare-on { border-color:rgba(251,191,36,.45); box-shadow:0 0 0 1px rgba(251,191,36,.16); }
+.anc-head { display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+.anc-name { font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700; color:#fff; line-height:1.25; }
+.anc-product { font-size:12px; color:var(--accent-2); font-weight:700; margin-top:2px; }
+.anc-chip-row, .anc-resource-row { display:flex; flex-wrap:wrap; gap:6px; }
+.anc-chip { display:inline-flex; padding:4px 9px; border-radius:999px; font-size:10px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; background:rgba(255,255,255,.06); color:var(--muted); border:1px solid rgba(255,255,255,.08); }
+.anc-chip.active { background:rgba(45,212,191,.12); border-color:rgba(45,212,191,.22); color:#bff8ee; }
+.anc-meta { font-size:12px; color:var(--muted); line-height:1.6; }
+.anc-label { color:var(--muted-2); font-weight:700; text-transform:uppercase; font-size:10px; letter-spacing:.6px; margin-bottom:2px; }
+.anc-resource-btn, .anc-compare-btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:6px; border-radius:8px; padding:7px 12px; font-size:11px; font-weight:700;
+  text-decoration:none; cursor:pointer; border:1px solid rgba(99,179,237,.3); background:rgba(99,179,237,.12); color:var(--accent-2); font-family:'Plus Jakarta Sans',sans-serif;
+}
+.anc-resource-btn:hover, .anc-compare-btn:hover { background:rgba(99,179,237,.18); }
+.anc-compare-btn.active { border-color:rgba(251,191,36,.35); background:rgba(251,191,36,.12); color:var(--gold); }
+.anc-compare-table-wrap { overflow:auto; border:1px solid var(--border); border-radius:12px; }
+.anc-compare-table { width:100%; border-collapse:collapse; min-width:760px; }
+.anc-compare-table th, .anc-compare-table td { padding:10px 12px; border-bottom:1px solid rgba(255,255,255,.06); vertical-align:top; }
+.anc-compare-table th { background:rgba(255,255,255,.03); font-size:11px; color:var(--muted); text-align:left; }
+.anc-compare-table td { font-size:12px; color:#fff; }
+.anc-upload-mini {
+  border:1px dashed rgba(255,255,255,.16); border-radius:10px; padding:10px 12px; background:rgba(255,255,255,.02); cursor:pointer;
+}
+.anc-upload-mini.has-file { border-style:solid; border-color:rgba(45,212,191,.3); background:rgba(45,212,191,.06); }
+.anc-upload-mini-title { font-size:11px; font-weight:700; color:#fff; margin-bottom:4px; }
+.anc-upload-mini-sub { font-size:11px; color:var(--muted-2); line-height:1.45; }
+.anc-admin-item { background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin-bottom:8px; }
+.anc-admin-item:last-child { margin-bottom:0; }
+.anc-admin-top { display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+.anc-admin-title { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:#fff; }
+.anc-admin-sub { font-size:11px; color:var(--muted-2); margin-top:2px; }
+@media (max-width: 680px) {
+  .anc-result-grid { grid-template-columns:1fr; }
+  .anc-filter-grid { grid-template-columns:1fr; }
+}
+
 </style>
 <script>
 (function(){
@@ -13774,6 +13885,573 @@ if (coach) { trackEvent('practice_tab', 'Sales Coach Launch'); return; }
 });
 console.log('[Medi Hub Tracking] Active · session:', _sid);
 })();
+</script>
+<div class="feature-overlay" id="ancillaryOverlay">
+<div class="feature-modal" style="max-width:1120px;">
+<div class="feature-modal-header">
+<div class="feature-modal-title">
+<div class="feature-modal-title-icon" style="background:rgba(52,211,153,.2);">🩺</div>
+<div><h3>Ancillary Carrier Finder</h3><p>Filter plans, open resources, and compare carriers</p></div>
+</div>
+<button class="feature-modal-close" onclick="closeAncillaryFinder()">✕</button>
+</div>
+<div class="feature-modal-body">
+<div class="anc-filter-grid">
+<div>
+<div class="anc-label">Category</div>
+<select class="anc-select" id="ancCategoryFilter" onchange="renderAncillaryFinder()"><option value="">All categories</option></select>
+</div>
+<div>
+<div class="anc-label">State</div>
+<select class="anc-select" id="ancStateFilter" onchange="renderAncillaryFinder()"><option value="">All states</option></select>
+</div>
+<div>
+<div class="anc-label">Search</div>
+<input class="anc-search-input" id="ancSearchFilter" oninput="renderAncillaryFinder()" placeholder="Carrier, product, rider…" type="text"/>
+</div>
+<div style="display:flex;align-items:end;gap:8px;">
+<button class="anc-resource-btn" onclick="resetAncillaryFilters()" style="width:100%;">↺ Reset Filters</button>
+</div>
+</div>
+<div class="anc-compare-bar" id="ancCompareBar">
+<div style="font-size:12px;color:#fde68a;font-weight:700;">Compare selected: <span id="ancCompareCount">0</span> / 3</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;">
+<button class="anc-resource-btn" onclick="openAncillaryCompare()">⚖️ Compare Selected</button>
+<button class="anc-resource-btn" onclick="clearAncillaryCompare()">✕ Clear</button>
+</div>
+</div>
+<div class="anc-result-grid" id="ancillaryResults"><div class="dir-empty">Loading ancillary plans…</div></div>
+</div>
+</div>
+</div><div class="feature-overlay" id="ancillaryCompareOverlay">
+<div class="feature-modal" style="max-width:1180px;">
+<div class="feature-modal-header">
+<div class="feature-modal-title">
+<div class="feature-modal-title-icon" style="background:rgba(251,191,36,.18);">⚖️</div>
+<div><h3>Ancillary Compare</h3><p>Side-by-side product comparison</p></div>
+</div>
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+<button class="anc-resource-btn" onclick="printAncillaryCompare()">🖨 Print</button>
+<button class="anc-resource-btn" onclick="emailAncillaryCompare()">✉️ Email</button>
+<button class="feature-modal-close" onclick="closeAncillaryCompare()">✕</button>
+</div>
+</div>
+<div class="feature-modal-body">
+<div id="ancillaryCompareContent"><div class="dir-empty">Select 2 or 3 plans to compare.</div></div>
+</div>
+</div>
+</div><script id="ancillary-finder-script">
+// ── ANCILLARY CARRIER FINDER ─────────────────────────────────────────────
+const ANC_LOCAL_KEY = 'ancillary_finder_v1';
+const ANC_SUPA_URL = 'https://bjlzwmoogypfefjxvgyt.supabase.co';
+const ANC_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqbHp3bW9vZ3lwZmVmanh2Z3l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg2NTM0MCwiZXhwIjoyMDg5NDQxMzQwfQ.B4Q9AwLnKUcywJHE-yljbYzKDDwXW8o4HrY7kxrpG-Q';
+const ANC_HUB = 'ga';
+const ANC_TILE_KEY = 'ancillary_finder';
+let _ancillary = [];
+let _ancillaryCompare = [];
+let _ancillaryEditId = null;
+let _ancillarySyncStarted = false;
+let _ancillaryPendingAssets = { brochure: null, chart: null };
+function ancEsc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function ancSlug(){ return 'anc_' + Date.now() + '_' + Math.random().toString(36).slice(2,8); }
+function ancSplitMulti(val){
+  return String(val||'').split(/[;,\n]+/).map(v=>String(v||'').trim()).filter(Boolean);
+}
+function ancSplitStates(val){
+  return ancSplitMulti(val).map(v=>v.toUpperCase()).filter(Boolean);
+}
+function ancBool(v){
+  const s = String(v == null ? '' : v).trim().toLowerCase();
+  if (!s) return true;
+  return !['false','0','no','n','inactive'].includes(s);
+}
+function ancNum(v){ const n = Number(String(v||'').replace(/,/g,'')); return Number.isFinite(n) ? n : 0; }
+function ancNormalizeCategory(val){
+  const raw = String(val || '').trim();
+  const s = raw.toLowerCase();
+  if (!raw) return '';
+  if (/hospital\s*(indemnity|confinement)|fchi|chi/.test(s)) return 'Hospital Indemnity';
+  if (/short[ -]?term\s*care|\bstc\b/.test(s)) return 'Short-Term Care';
+  if (/dental|vision|hearing|\bdvh\b/.test(s)) return 'Dental / Vision / Hearing';
+  if (/\baccident\b/.test(s)) return 'Accident';
+  if (/whole life|\blife\b/.test(s) && !/quality of life/.test(s)) return 'Life';
+  if (/critical illness|cancer|heart|stroke|specified disease/.test(s)) return 'Cancer / Heart Attack & Stroke';
+  return raw;
+}
+function ancNormalizeRecord(r){
+  const id = String(r.id || ancSlug());
+  const rawCategory = String(r.raw_category || r.sub_category || r.original_category || r.category || '').trim();
+  return {
+    id,
+    carrier_name: String(r.carrier_name || r.name || '').trim(),
+    category: ancNormalizeCategory(rawCategory),
+    raw_category: rawCategory,
+    product_name: String(r.product_name || '').trim(),
+    states: Array.isArray(r.states) ? r.states.map(v=>String(v).trim().toUpperCase()).filter(Boolean) : ancSplitStates(r.states),
+    riders: Array.isArray(r.riders) ? r.riders.map(v=>String(v).trim()).filter(Boolean) : ancSplitMulti(r.riders),
+    brochure_url: String(r.brochure_url || '').trim(),
+    brochure_file64: String(r.brochure_file64 || '').trim(),
+    brochure_file_type: String(r.brochure_file_type || '').trim(),
+    brochure_file_name: String(r.brochure_file_name || '').trim(),
+    state_chart_url: String(r.state_chart_url || '').trim(),
+    state_chart_file64: String(r.state_chart_file64 || '').trim(),
+    state_chart_file_type: String(r.state_chart_file_type || '').trim(),
+    state_chart_file_name: String(r.state_chart_file_name || '').trim(),
+    eapp_url: String(r.eapp_url || '').trim(),
+    portal_url: String(r.portal_url || '').trim(),
+    support_phone: String(r.support_phone || '').trim(),
+    notes: String(r.notes || '').trim(),
+    active: r.active === undefined ? true : ancBool(r.active),
+    sort_order: ancNum(r.sort_order || 0)
+  };
+}
+function ancNaturalKey(r){
+  const states = Array.isArray(r.states) ? [...r.states].map(v=>String(v).trim().toUpperCase()).filter(Boolean).sort().join('|') : '';
+  return [
+    String(r.carrier_name || '').trim().toLowerCase(),
+    String(r.product_name || '').trim().toLowerCase(),
+    String(r.raw_category || r.category || '').trim().toLowerCase(),
+    states
+  ].join('::');
+}
+function ancNormalizePayload(raw){
+  const d = typeof raw === 'string' ? JSON.parse(raw) : (raw || {});
+  const rows = Array.isArray(d.records) ? d.records : (Array.isArray(d) ? d : []);
+  return rows.map(ancNormalizeRecord).filter(r => r.carrier_name && r.category && r.product_name);
+}
+function ancSaveLocal(){ try { localStorage.setItem(ANC_LOCAL_KEY, JSON.stringify({ records:_ancillary })); } catch(e){} }
+function ancFetchCloud(){
+  return fetch(`${ANC_SUPA_URL}/rest/v1/tile_content?hub=eq.${ANC_HUB}&key=eq.${ANC_TILE_KEY}&select=data`, {
+    headers:{ 'apikey': ANC_SUPA_KEY, 'Authorization':'Bearer '+ANC_SUPA_KEY, 'Cache-Control':'no-cache' }
+  }).then(r=>r.json());
+}
+function ancLoadData(){
+  try {
+    const raw = localStorage.getItem(ANC_LOCAL_KEY);
+    if (raw) _ancillary = ancNormalizePayload(JSON.parse(raw));
+  } catch(e) {}
+  renderAncillaryAdminList();
+  renderAncillaryFinder();
+  ancFetchCloud().then(rows=>{
+    if (rows && rows.length && rows[0].data) {
+      _ancillary = ancNormalizePayload(rows[0].data);
+      ancSaveLocal();
+      renderAncillaryAdminList();
+      renderAncillaryFinder();
+    }
+  }).catch(()=>{});
+}
+function ancStartSync(){
+  if (_ancillarySyncStarted) return;
+  _ancillarySyncStarted = true;
+  setInterval(()=>{ ancFetchCloud().then(rows=>{
+    if (rows && rows.length && rows[0].data) {
+      _ancillary = ancNormalizePayload(rows[0].data);
+      ancSaveLocal();
+      renderAncillaryAdminList();
+      renderAncillaryFinder();
+    }
+  }).catch(()=>{}); }, 12000);
+}
+function ancSaveCloud(successMsg, failMsg){
+  ancSaveLocal();
+  const payload = JSON.stringify({ records:_ancillary });
+  const headers = { 'apikey': ANC_SUPA_KEY, 'Authorization':'Bearer '+ANC_SUPA_KEY, 'Content-Type':'application/json', 'Prefer':'return=minimal' };
+  return fetch(`${ANC_SUPA_URL}/rest/v1/tile_content?hub=eq.${ANC_HUB}&key=eq.${ANC_TILE_KEY}`, {
+    method:'DELETE', headers:{ 'apikey': ANC_SUPA_KEY, 'Authorization':'Bearer '+ANC_SUPA_KEY }
+  }).then(()=>fetch(`${ANC_SUPA_URL}/rest/v1/tile_content`, {
+    method:'POST', headers, body: JSON.stringify({ hub: ANC_HUB, key: ANC_TILE_KEY, data: payload })
+  })).then(()=>{
+    if (typeof showSnuToast === 'function') showSnuToast(successMsg || '✓ Ancillary Finder published!');
+  }).catch(()=>{
+    if (typeof showSnuToast === 'function') showSnuToast(failMsg || '⚠ Saved locally (cloud sync failed).');
+  });
+}
+function ancGetActive(){ return _ancillary.filter(r => r.active !== false); }
+function ancGetCategories(){ return [...new Set(ancGetActive().map(r=>r.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b)); }
+function ancGetStates(){ return [...new Set(ancGetActive().flatMap(r=>Array.isArray(r.states)?r.states:[]).filter(Boolean))].sort(); }
+function renderAncillaryFilterOptions(){
+  const cat = document.getElementById('ancCategoryFilter');
+  const st = document.getElementById('ancStateFilter');
+  const curCat = cat ? cat.value : '';
+  const curSt = st ? st.value : '';
+  if (cat) cat.innerHTML = '<option value="">All categories</option>' + ancGetCategories().map(v=>`<option value="${ancEsc(v)}">${ancEsc(v)}</option>`).join('');
+  if (st) st.innerHTML = '<option value="">All states</option>' + ancGetStates().map(v=>`<option value="${ancEsc(v)}">${ancEsc(v)}</option>`).join('');
+  if (cat) cat.value = curCat;
+  if (st) st.value = curSt;
+}
+function ancFiltered(){
+  const category = (document.getElementById('ancCategoryFilter')?.value || '').trim().toLowerCase();
+  const state = (document.getElementById('ancStateFilter')?.value || '').trim().toUpperCase();
+  const q = (document.getElementById('ancSearchFilter')?.value || '').trim().toLowerCase();
+  return ancGetActive().filter(r => {
+    if (category && String(r.category||'').toLowerCase() !== category) return false;
+    if (state && !(Array.isArray(r.states) && r.states.includes(state))) return false;
+    if (q) {
+      const hay = [r.carrier_name, r.product_name, r.category, r.notes, (r.riders||[]).join(' '), (r.states||[]).join(' ')].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  }).sort((a,b) => (Number(a.sort_order)||0) - (Number(b.sort_order)||0) || a.carrier_name.localeCompare(b.carrier_name));
+}
+function ancDocBtn(rec, kind, label){
+  const urlKey = kind === 'brochure' ? 'brochure_url' : 'state_chart_url';
+  const fileKey = kind === 'brochure' ? 'brochure_file64' : 'state_chart_file64';
+  if (!rec[urlKey] && !rec[fileKey]) return '';
+  return `<button class="anc-resource-btn" onclick="openAncillaryDoc('${ancEsc(rec.id)}','${kind}')">${label}</button>`;
+}
+window.openAncillaryDoc = function(id, kind){
+  const rec = _ancillary.find(r => String(r.id) === String(id));
+  if (!rec) return;
+  const urlKey = kind === 'brochure' ? 'brochure_url' : 'state_chart_url';
+  const fileKey = kind === 'brochure' ? 'brochure_file64' : 'state_chart_file64';
+  const typeKey = kind === 'brochure' ? 'brochure_file_type' : 'state_chart_file_type';
+  const nameKey = kind === 'brochure' ? 'brochure_file_name' : 'state_chart_file_name';
+  if (rec[fileKey]) {
+    if (typeof openLightbox === 'function') openLightbox(rec[fileKey], rec[typeKey] || 'application/pdf', rec[nameKey] || kind);
+    else window.open(rec[fileKey], '_blank');
+    return;
+  }
+  if (rec[urlKey]) window.open(rec[urlKey], '_blank', 'noopener');
+};
+window.toggleAncillaryCompare = function(id){
+  id = String(id);
+  if (_ancillaryCompare.includes(id)) _ancillaryCompare = _ancillaryCompare.filter(x => x !== id);
+  else {
+    if (_ancillaryCompare.length >= 3) {
+      if (typeof showSnuToast === 'function') showSnuToast('⚠ Compare up to 3 plans at a time.');
+      return;
+    }
+    _ancillaryCompare.push(id);
+  }
+  renderAncillaryCompareBar();
+  renderAncillaryFinder();
+};
+function renderAncillaryCompareBar(){
+  const bar = document.getElementById('ancCompareBar');
+  const ct = document.getElementById('ancCompareCount');
+  if (ct) ct.textContent = String(_ancillaryCompare.length);
+  if (bar) bar.classList.toggle('active', _ancillaryCompare.length > 0);
+}
+window.clearAncillaryCompare = function(){ _ancillaryCompare = []; renderAncillaryCompareBar(); renderAncillaryFinder(); };
+function ancRenderResourceRow(rec){
+  return [
+    ancDocBtn(rec, 'brochure', '📄 Brochure'),
+    ancDocBtn(rec, 'chart', '🗺️ State Chart'),
+    rec.eapp_url ? `<a class="anc-resource-btn" href="${ancEsc(rec.eapp_url)}" target="_blank" rel="noopener">🖊️ Quote / Enroll</a>` : '',
+    rec.portal_url ? `<a class="anc-resource-btn" href="${ancEsc(rec.portal_url)}" target="_blank" rel="noopener">🔗 Portal</a>` : ''
+  ].filter(Boolean).join('');
+}
+window.renderAncillaryFinder = function(){
+  renderAncillaryFilterOptions();
+  renderAncillaryCompareBar();
+  const el = document.getElementById('ancillaryResults'); if (!el) return;
+  const list = ancFiltered();
+  if (!list.length) { el.innerHTML = '<div class="dir-empty">No ancillary products match those filters.</div>'; return; }
+  el.innerHTML = list.map(rec => {
+    const selected = _ancillaryCompare.includes(String(rec.id));
+    const states = (rec.states||[]).join(', ');
+    const riders = (rec.riders||[]).length ? rec.riders.map(r=>`<span class="anc-chip active">${ancEsc(r)}</span>`).join('') : '<span class="anc-chip">No riders listed</span>';
+    const subtype = rec.raw_category && rec.raw_category !== rec.category ? `<span class="anc-chip">${ancEsc(rec.raw_category)}</span>` : '';
+    return `<div class="anc-card${selected?' compare-on':''}">
+      <div class="anc-head">
+        <div>
+          <div class="anc-name">${ancEsc(rec.carrier_name)}</div>
+          <div class="anc-product">${ancEsc(rec.product_name)}</div>
+        </div>
+        <button class="anc-compare-btn${selected?' active':''}" onclick="toggleAncillaryCompare('${ancEsc(rec.id)}')">${selected ? '✓ Comparing' : '＋ Compare'}</button>
+      </div>
+      <div class="anc-chip-row">
+        <span class="anc-chip active">${ancEsc(rec.category)}</span>
+        ${subtype}
+        ${states ? `<span class="anc-chip">${ancEsc(states)}</span>` : ''}
+        ${rec.eapp_url ? '<span class="anc-chip">Quote / Enroll</span>' : ''}
+      </div>
+      <div>
+        <div class="anc-label">Riders</div>
+        <div class="anc-chip-row">${riders}</div>
+      </div>
+      ${rec.notes ? `<div><div class="anc-label">Notes</div><div class="anc-meta">${ancEsc(rec.notes)}</div></div>` : ''}
+      <div>
+        <div class="anc-label">Resources</div>
+        <div class="anc-resource-row">${ancRenderResourceRow(rec) || '<span class="anc-chip">No resources yet</span>'}</div>
+      </div>
+      <div class="anc-meta">${rec.support_phone ? `<strong style="color:#fff;">Support:</strong> ${ancEsc(rec.support_phone)}` : '<span style="color:var(--muted-2);">No support phone listed</span>'}</div>
+    </div>`;
+  }).join('');
+};
+window.resetAncillaryFilters = function(){
+  const ids = ['ancCategoryFilter','ancStateFilter','ancSearchFilter']; ids.forEach(id=>{ const el=document.getElementById(id); if (el) el.value=''; }); renderAncillaryFinder();
+};
+window.openAncillaryFinder = function(){
+  document.getElementById('ancillaryOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  ancLoadData();
+  ancStartSync();
+  const cat = document.getElementById('ancCategoryFilter'); if (cat) cat.value = '';
+  const st = document.getElementById('ancStateFilter'); if (st) st.value = '';
+  const q = document.getElementById('ancSearchFilter'); if (q) q.value = '';
+  renderAncillaryFinder();
+};
+window.closeAncillaryFinder = function(){ document.getElementById('ancillaryOverlay').classList.remove('open'); document.body.style.overflow=''; };
+document.addEventListener('DOMContentLoaded', ()=>{
+  const ov = document.getElementById('ancillaryOverlay'); if (ov) ov.addEventListener('click', e=>{ if (e.target === e.currentTarget) closeAncillaryFinder(); });
+  const cv = document.getElementById('ancillaryCompareOverlay'); if (cv) cv.addEventListener('click', e=>{ if (e.target === e.currentTarget) closeAncillaryCompare(); });
+});
+window.openAncillaryCompare = function(){
+  const chosen = _ancillary.filter(r => _ancillaryCompare.includes(String(r.id)));
+  const el = document.getElementById('ancillaryCompareContent'); if (!el) return;
+  if (chosen.length < 2) { if (typeof showSnuToast === 'function') showSnuToast('⚠ Select at least 2 plans to compare.'); return; }
+  const rows = [
+    ['Carrier', r => ancEsc(r.carrier_name)],
+    ['Product', r => ancEsc(r.product_name)],
+    ['Category', r => ancEsc(r.category)],
+    ['Plan Type', r => ancEsc(r.raw_category || r.category || '—')],
+    ['States', r => ancEsc((r.states||[]).join(', ') || '—')],
+    ['Riders', r => ancEsc((r.riders||[]).join(', ') || '—')],
+    ['Quote / Enroll', r => r.eapp_url ? `<a class="anc-resource-btn" href="${ancEsc(r.eapp_url)}" target="_blank" rel="noopener">Open ↗</a>` : '—'],
+    ['Brochure', r => (r.brochure_url || r.brochure_file64) ? `<button class="anc-resource-btn" onclick="openAncillaryDoc('${ancEsc(r.id)}','brochure')">Open</button>` : '—'],
+    ['State Chart', r => (r.state_chart_url || r.state_chart_file64) ? `<button class="anc-resource-btn" onclick="openAncillaryDoc('${ancEsc(r.id)}','chart')">Open</button>` : '—'],
+    ['Portal', r => r.portal_url ? `<a class="anc-resource-btn" href="${ancEsc(r.portal_url)}" target="_blank" rel="noopener">Open ↗</a>` : '—'],
+    ['Support', r => ancEsc(r.support_phone || '—')],
+    ['Notes', r => ancEsc(r.notes || '—')]
+  ];
+  el.innerHTML = `<div class="anc-compare-table-wrap"><table class="anc-compare-table"><thead><tr><th style="width:170px;">Compare</th>${chosen.map(r=>`<th><div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#fff;">${ancEsc(r.carrier_name)}</div><div style="font-size:11px;color:var(--accent-2);margin-top:2px;">${ancEsc(r.product_name)}</div></th>`).join('')}</tr></thead><tbody>${rows.map(([label, fn])=>`<tr><th>${label}</th>${chosen.map(r=>`<td>${fn(r)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  document.getElementById('ancillaryCompareOverlay').classList.add('open'); document.body.style.overflow='hidden';
+};
+window.closeAncillaryCompare = function(){ document.getElementById('ancillaryCompareOverlay').classList.remove('open'); document.body.style.overflow=''; };
+window.printAncillaryCompare = function(){
+  const content = document.getElementById('ancillaryCompareContent'); if (!content) return;
+  const w = window.open('', '_blank', 'width=1180,height=820');
+  if (!w) { if (typeof showSnuToast === 'function') showSnuToast('⚠ Allow pop-ups to print the compare view.'); return; }
+  w.document.write('<html><head><title>Ancillary Compare</title><style>body{font-family:Arial,sans-serif;padding:24px;color:#111}table{width:100%;border-collapse:collapse}th,td{border:1px solid #d1d5db;padding:10px;vertical-align:top;text-align:left}th{background:#f3f4f6}button{display:none}</style></head><body><h2>Ancillary Compare</h2>' + content.innerHTML + '</body></html>');
+  w.document.close();
+  w.focus();
+  setTimeout(()=>w.print(), 400);
+};
+window.emailAncillaryCompare = function(){
+  const chosen = _ancillary.filter(r => _ancillaryCompare.includes(String(r.id)));
+  if (chosen.length < 2) { if (typeof showSnuToast === 'function') showSnuToast('⚠ Select at least 2 plans to compare.'); return; }
+  const lines = [];
+  lines.push('Ancillary Compare');
+  lines.push('');
+  chosen.forEach((r, idx) => {
+    lines.push((idx+1) + '. ' + (r.carrier_name || 'Carrier') + ' - ' + (r.product_name || 'Product'));
+    lines.push('Category: ' + (r.category || ''));
+    lines.push('States: ' + ((r.states||[]).join(', ') || '—'));
+    lines.push('Riders: ' + ((r.riders||[]).join(', ') || '—'));
+    lines.push('Quote / Enroll: ' + (r.eapp_url || '—'));
+    lines.push('Brochure: ' + (r.brochure_url || (r.brochure_file_name || 'Embedded file')));
+    lines.push('State Chart: ' + (r.state_chart_url || (r.state_chart_file_name || 'Embedded file')));
+    lines.push('Portal: ' + (r.portal_url || '—'));
+    lines.push('Support: ' + (r.support_phone || '—'));
+    lines.push('Notes: ' + (r.notes || '—'));
+    lines.push('');
+  });
+  const subject = encodeURIComponent('Ancillary Compare');
+  const body = encodeURIComponent(lines.join('\n'));
+  window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
+};
+function ancUpdateAssetLabels(){
+  const b = _ancillaryPendingAssets.brochure; const c = _ancillaryPendingAssets.chart;
+  const bLabel = document.getElementById('ancBrochureFileLabel'); const cLabel = document.getElementById('ancChartFileLabel');
+  const bz = document.getElementById('ancBrochureZone'); const cz = document.getElementById('ancChartZone');
+  if (bLabel) bLabel.textContent = b ? b.name : 'Click to upload PDF or image brochure';
+  if (cLabel) cLabel.textContent = c ? c.name : 'Click to upload PDF or image chart';
+  if (bz) bz.classList.toggle('has-file', !!b); if (cz) cz.classList.toggle('has-file', !!c);
+}
+window.handleAncillaryAsset = function(file, kind){
+  if (!file) return;
+  if (file.size > 1800000) { if (typeof showSnuToast === 'function') showSnuToast('⚠ File too large — use a hosted URL for large PDFs.'); return; }
+  const reader = new FileReader();
+  reader.onload = e => { _ancillaryPendingAssets[kind] = { dataUrl: e.target.result, type: file.type || '', name: file.name || '' }; ancUpdateAssetLabels(); };
+  reader.readAsDataURL(file);
+};
+function ancSetForm(rec){
+  const set = (id, val) => { const el = document.getElementById(id); if (!el) return; if (el.type === 'checkbox') el.checked = !!val; else el.value = val || ''; };
+  set('ancCarrierName', rec?.carrier_name || ''); set('ancCategory', rec?.category || ''); set('ancProductName', rec?.product_name || '');
+  set('ancStates', (rec?.states || []).join(', ')); set('ancRiders', (rec?.riders || []).join('; '));
+  set('ancBrochureUrl', rec?.brochure_url || ''); set('ancStateChartUrl', rec?.state_chart_url || ''); set('ancEappUrl', rec?.eapp_url || '');
+  set('ancPortalUrl', rec?.portal_url || ''); set('ancSupportPhone', rec?.support_phone || ''); set('ancSortOrder', rec?.sort_order || '');
+  set('ancNotes', rec?.notes || ''); set('ancActive', rec ? rec.active !== false : true);
+  _ancillaryPendingAssets = {
+    brochure: rec?.brochure_file64 ? { dataUrl: rec.brochure_file64, type: rec.brochure_file_type || '', name: rec.brochure_file_name || 'Saved file' } : null,
+    chart: rec?.state_chart_file64 ? { dataUrl: rec.state_chart_file64, type: rec.state_chart_file_type || '', name: rec.state_chart_file_name || 'Saved file' } : null
+  };
+  ancUpdateAssetLabels();
+}
+window.cancelAncillaryEdit = function(){
+  _ancillaryEditId = null; ancSetForm(null); const btn = document.getElementById('ancCancelBtn'); if (btn) btn.style.display='none';
+  const fi1=document.getElementById('ancBrochureInput'); if(fi1) fi1.value=''; const fi2=document.getElementById('ancChartInput'); if(fi2) fi2.value='';
+};
+window.submitAncillaryEntry = function(){
+  const g = id => (document.getElementById(id)?.value || '').trim();
+  const carrier_name = g('ancCarrierName'); const category = g('ancCategory'); const product_name = g('ancProductName');
+  if (!carrier_name || !category || !product_name) { if (typeof showSnuToast === 'function') showSnuToast('⚠ Carrier, category, and product are required.'); return; }
+  const prev = _ancillaryEditId ? (_ancillary.find(r => String(r.id) === String(_ancillaryEditId)) || {}) : {};
+  const rec = ancNormalizeRecord({
+    id: _ancillaryEditId || ancSlug(),
+    carrier_name, category, product_name,
+    states: ancSplitStates(g('ancStates')),
+    riders: ancSplitMulti(g('ancRiders')),
+    brochure_url: g('ancBrochureUrl'),
+    brochure_file64: _ancillaryPendingAssets.brochure?.dataUrl || prev.brochure_file64 || '',
+    brochure_file_type: _ancillaryPendingAssets.brochure?.type || prev.brochure_file_type || '',
+    brochure_file_name: _ancillaryPendingAssets.brochure?.name || prev.brochure_file_name || '',
+    state_chart_url: g('ancStateChartUrl'),
+    state_chart_file64: _ancillaryPendingAssets.chart?.dataUrl || prev.state_chart_file64 || '',
+    state_chart_file_type: _ancillaryPendingAssets.chart?.type || prev.state_chart_file_type || '',
+    state_chart_file_name: _ancillaryPendingAssets.chart?.name || prev.state_chart_file_name || '',
+    eapp_url: g('ancEappUrl'),
+    portal_url: g('ancPortalUrl'),
+    support_phone: g('ancSupportPhone'),
+    notes: g('ancNotes'),
+    active: !!document.getElementById('ancActive')?.checked,
+    sort_order: ancNum(g('ancSortOrder'))
+  });
+  const idx = _ancillary.findIndex(r => String(r.id) === String(rec.id));
+  if (idx >= 0) _ancillary[idx] = rec; else _ancillary.push(rec);
+  renderAncillaryAdminList(); renderAncillaryFinder();
+  ancSaveCloud('✓ Ancillary entry saved globally!');
+  cancelAncillaryEdit();
+};
+window.editAncillaryEntry = function(id){
+  const rec = _ancillary.find(r => String(r.id) === String(id)); if (!rec) return;
+  _ancillaryEditId = rec.id; ancSetForm(rec); const btn=document.getElementById('ancCancelBtn'); if(btn) btn.style.display='';
+  document.getElementById('ancCarrierName')?.focus();
+};
+window.deleteAncillaryEntry = function(id){
+  _ancillary = _ancillary.filter(r => String(r.id) !== String(id)); _ancillaryCompare = _ancillaryCompare.filter(x => String(x) !== String(id));
+  renderAncillaryAdminList(); renderAncillaryFinder(); renderAncillaryCompareBar();
+  ancSaveCloud('🗑 Ancillary entry removed.');
+};
+function renderAncillaryAdminList(){
+  const el = document.getElementById('ancAdminList'); const ct = document.getElementById('ancAdminCount'); if (!el) return;
+  if (ct) ct.textContent = `(${_ancillary.length})`;
+  if (!_ancillary.length) { el.innerHTML = '<div style="color:var(--muted-2);font-style:italic;font-size:12px;padding:8px 0;">No ancillary plans yet.</div>'; return; }
+  const rows = [..._ancillary].sort((a,b)=>(Number(a.sort_order)||0)-(Number(b.sort_order)||0)||a.carrier_name.localeCompare(b.carrier_name));
+  el.innerHTML = rows.map(r => `
+    <div class="anc-admin-item">
+      <div class="anc-admin-top">
+        <div style="flex:1;min-width:0;">
+          <div class="anc-admin-title">${ancEsc(r.carrier_name)} <span style="color:var(--accent-2);font-weight:600;">· ${ancEsc(r.product_name)}</span></div>
+          <div class="anc-admin-sub">${ancEsc(r.category)}${(r.states||[]).length ? ' · ' + ancEsc(r.states.join(', ')) : ''}${r.active === false ? ' · Inactive' : ''}</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0;">
+          <button onclick="editAncillaryEntry('${ancEsc(r.id)}')" style="padding:4px 10px;border-radius:6px;border:1px solid rgba(99,179,237,.3);background:rgba(99,179,237,.1);color:var(--accent-2);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;">✏️</button>
+          <button onclick="deleteAncillaryEntry('${ancEsc(r.id)}')" class="admin-update-del">🗑</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">${(r.riders||[]).slice(0,6).map(v=>`<span class="anc-chip active">${ancEsc(v)}</span>`).join('') || '<span class="anc-chip">No riders listed</span>'}</div>
+      <div style="font-size:11px;color:var(--muted-2);margin-top:8px;line-height:1.5;">${ancEsc(r.notes || '')}</div>
+    </div>
+  `).join('');
+}
+function ancMapHeaders(headers){
+  const lower = headers.map(h => String(h||'').trim().toLowerCase());
+  const find = (...names) => {
+    const idx = lower.findIndex(h => names.includes(h));
+    return idx >= 0 ? headers[idx] : '';
+  };
+  return {
+    carrier_name: find('carrier name','carrier','name'),
+    category: find('category','plan category','type'),
+    product_name: find('product name','product','plan name'),
+    states: find('states','state availability','state'),
+    riders: find('riders','rider','benefits'),
+    brochure_url: find('brochure url','brochure','brochure link'),
+    state_chart_url: find('state chart url','state chart','availability chart','state availability chart'),
+    eapp_url: find('quote / enroll url','quote and enroll url','quote & enroll url','quote/enroll url','quote enroll url','quote url','enroll url','eapp url','eapp','e-app','e-app url'),
+    portal_url: find('portal url','portal'),
+    support_phone: find('support phone','support','phone','broker support'),
+    notes: find('notes','note'),
+    active: find('active','status'),
+    sort_order: find('sort order','sort','order')
+  };
+}
+function ancRowsFromImported(rows, headers){
+  const map = ancMapHeaders(headers);
+  const out = rows.map(r => ancNormalizeRecord({
+    id: ancSlug(),
+    carrier_name: r[map.carrier_name],
+    category: r[map.category],
+    product_name: r[map.product_name],
+    states: r[map.states],
+    riders: r[map.riders],
+    brochure_url: r[map.brochure_url],
+    state_chart_url: r[map.state_chart_url],
+    eapp_url: r[map.eapp_url],
+    portal_url: r[map.portal_url],
+    support_phone: r[map.support_phone],
+    notes: r[map.notes],
+    active: map.active ? r[map.active] : true,
+    sort_order: map.sort_order ? r[map.sort_order] : 0
+  })).filter(r => r.carrier_name && r.category && r.product_name);
+  return out;
+}
+window.handleAncillaryCsvFile = function(file){
+  if (!file) return;
+  const status = document.getElementById('ancillaryCsvStatus');
+  const setMsg = (msg, ok) => { if (status) { status.textContent = msg; status.className = 'csv-status ' + (ok ? 'ok' : 'err'); } };
+  const processRows = (rows, headers) => {
+    const items = ancRowsFromImported(rows, headers);
+    if (!items.length) { setMsg('✗ No valid ancillary rows found.', false); return; }
+    const merged = [..._ancillary];
+    items.forEach(rec => {
+      const key = ancNaturalKey(rec);
+      const idx = merged.findIndex(x => ancNaturalKey(x) === key);
+      if (idx >= 0) merged[idx] = { ...merged[idx], ...rec, id: merged[idx].id || rec.id };
+      else merged.push(rec);
+    });
+    _ancillary = merged;
+    renderAncillaryAdminList(); renderAncillaryFinder();
+    ancSaveCloud('✓ Ancillary library imported and published!');
+    setMsg(`✓ Imported ${items.length} ancillary plan${items.length !== 1 ? 's' : ''} and merged them into the current library.`, true);
+  };
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try {
+      if (file.name.match(/\.xlsx?$/i)) {
+        if (typeof XLSX === 'undefined') { setMsg('Loading Excel support…', false); loadSheetJS(() => handleAncillaryCsvFile(file)); return; }
+        const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const raw = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+        const headerRow = raw.findIndex(r => Array.isArray(r) && r.some(c => String(c || '').trim()));
+        const headers = (raw[headerRow] || []).map(h => String(h || '').trim());
+        const rows = raw.slice(headerRow + 1).filter(r => Array.isArray(r) && r.some(c => String(c || '').trim())).map(r => {
+          const obj = {}; headers.forEach((h,i)=>obj[h] = r[i] !== undefined ? String(r[i]).trim() : ''); return obj;
+        });
+        processRows(rows, headers);
+      } else {
+        const lines = String(e.target.result || '').split(/\r?\n/).filter(l => l.trim());
+        const headers = smartSplitCsv(lines[0]).map(h => String(h || '').replace(/^"|"$/g,'').trim());
+        const rows = lines.slice(1).map(line => {
+          const vals = smartSplitCsv(line); const obj = {}; headers.forEach((h,i)=>obj[h] = String(vals[i] || '').replace(/^"|"$/g,'').trim()); return obj;
+        });
+        processRows(rows, headers);
+      }
+    } catch (err) { setMsg('✗ Parse error: ' + err.message, false); }
+  };
+  if (file.name.match(/\.xlsx?$/i)) reader.readAsArrayBuffer(file); else reader.readAsText(file);
+};
+window.clearAncillaryData = function(){
+  if (!confirm('Clear the entire ancillary library?')) return;
+  _ancillary = []; _ancillaryCompare = []; ancSaveLocal(); renderAncillaryAdminList(); renderAncillaryFinder(); renderAncillaryCompareBar();
+  fetch(`${ANC_SUPA_URL}/rest/v1/tile_content?hub=eq.${ANC_HUB}&key=eq.${ANC_TILE_KEY}`, { method:'DELETE', headers:{ 'apikey': ANC_SUPA_KEY, 'Authorization':'Bearer '+ANC_SUPA_KEY } }).then(()=>{
+    if (typeof showSnuToast === 'function') showSnuToast('🗑 Ancillary library cleared.');
+  }).catch(()=>{});
+  cancelAncillaryEdit();
+  const status = document.getElementById('ancillaryCsvStatus'); if (status) { status.textContent=''; status.className='csv-status'; }
+};
+document.addEventListener('DOMContentLoaded', ()=>{
+  ancLoadData(); ancStartSync();
+  const drop = document.getElementById('ancillaryCsvDrop');
+  if (drop) {
+    drop.addEventListener('dragover', e=>{ e.preventDefault(); drop.classList.add('drag-over'); });
+    drop.addEventListener('dragleave', ()=>drop.classList.remove('drag-over'));
+    drop.addEventListener('drop', e=>{ e.preventDefault(); drop.classList.remove('drag-over'); const file=e.dataTransfer.files[0]; if(file) handleAncillaryCsvFile(file); });
+  }
+});
 </script>
 </body>
 </html>
